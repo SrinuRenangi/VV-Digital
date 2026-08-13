@@ -181,9 +181,9 @@ export default function Clients() {
         </Reveal>
       </div>
 
-      {/* Interactive Marquee Track */}
+      {/* Interactive Marquee Track (Right-Side Scrolling) */}
       <div className="marquee-mask w-full overflow-hidden py-2">
-        <div className="flex w-max animate-marquee gap-6 pr-6 pause-on-hover">
+        <div className="flex w-max animate-marquee-reverse gap-6 pr-6 pause-on-hover">
           {[0, 1].map((half) => (
             <div key={half} aria-hidden={half === 1} className="flex items-center gap-6">
               {CLIENTS.map((client) => (

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { CheckCircle2, MapPin, Phone, Send, Sparkles } from 'lucide-react'
+import { CheckCircle2, MapPin, MessageSquare, Phone, Send, Sparkles } from 'lucide-react'
 
 /* Scroll-reveal hook: fires once when the element enters the viewport. */
 function useInView(threshold = 0.15) {
@@ -32,9 +32,8 @@ function Reveal({ children, delay = 0, className = '' }) {
     <div
       ref={ref}
       style={{ transitionDelay: `${delay}ms` }}
-      className={`transition-all duration-700 ease-out will-change-transform ${
-        inView ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-      } ${className}`}
+      className={`transition-all duration-700 ease-out will-change-transform ${inView ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+        } ${className}`}
     >
       {children}
     </div>
@@ -105,6 +104,24 @@ const FIELD =
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false)
 
+  const handleFormSubmit = (e) => {
+    e.preventDefault()
+    const formData = new FormData(e.currentTarget)
+    const name = formData.get('name') || ''
+    const phone = formData.get('phone') || ''
+    const service = formData.get('service') || ''
+    const details = formData.get('details') || ''
+
+    // Format WhatsApp message
+    const messageText = `*New Inquiry from VV Digitals Website*\n\n📌 *Name:* ${name}\n📞 *Phone:* ${phone}\n🎯 *Service Required:* ${service}\n📝 *Project Details:* ${details}`
+
+    const whatsappUrl = `https://wa.me/919491002402?text=${encodeURIComponent(messageText)}`
+
+    // Open WhatsApp URL in a new tab
+    window.open(whatsappUrl, '_blank')
+    setSubmitted(true)
+  }
+
   return (
     <section
       id="contact"
@@ -120,9 +137,19 @@ export default function Contact() {
             </span>
           </Reveal>
           <Reveal delay={100}>
-            <h2 className="mt-6 mb-4 text-4xl font-semibold tracking-tight text-[#1d1d1f] sm:text-5xl">
-              Let&rsquo;s build something exceptional.
-            </h2>
+            <div className="mt-6 mb-6">
+              <h2 className="text-4xl font-semibold tracking-tight text-[#1d1d1f] sm:text-5xl">
+                Let&rsquo;s build something exceptional.
+              </h2>
+              <div className="mt-4 inline-flex items-center gap-3 rounded-2xl border border-black/10 bg-white px-4.5 py-2.5 shadow-xs transition-all duration-300 hover:scale-105 hover:shadow-md">
+                <img
+                  src="/vv-digitals-logo-stacked-black.svg"
+                  alt="VV Digitals"
+                  className="h-9 w-auto shrink-0"
+                  loading="eager"
+                />
+              </div>
+            </div>
           </Reveal>
           <Reveal delay={180}>
             <p className="text-base leading-relaxed text-[#86868b] sm:text-lg">
@@ -134,15 +161,17 @@ export default function Contact() {
           <div className="mt-8 flex flex-col gap-4">
             <Reveal delay={240}>
               <a
-                href="tel:+916309016428"
-                className="group flex items-center gap-4 rounded-2xl border border-black/10 bg-white p-4 transition-all duration-300 hover:border-black/20 hover:shadow-md"
+                href="https://wa.me/919491002402"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-4 rounded-2xl border border-black/10 bg-white p-4 transition-all duration-300 hover:border-[#25D366]/40 hover:shadow-md"
               >
-                <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#1d1d1f] text-white transition-colors duration-300 group-hover:bg-[#0066cc]">
+                <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#1d1d1f] text-white transition-colors duration-300 group-hover:bg-[#25D366]">
                   <Phone className="h-5 w-5" />
                 </span>
                 <span className="flex flex-col">
                   <span className="text-xs text-[#86868b]">Direct Phone / WhatsApp</span>
-                  <span className="text-base font-semibold text-[#1d1d1f]">+91 63090 16428</span>
+                  <span className="text-base font-semibold text-[#1d1d1f]">+91 94910 02402</span>
                 </span>
               </a>
             </Reveal>
@@ -190,20 +219,22 @@ export default function Contact() {
             <div className="rounded-3xl border border-black/10 bg-white p-8 shadow-sm sm:p-10">
               <div className="flex flex-col items-center text-center">
                 <CheckCircle2 className="h-14 w-14 text-[#0066cc]" />
-                <h3 className="mt-5 text-2xl font-semibold text-[#1d1d1f]">Message Received</h3>
+                <h3 className="mt-5 text-2xl font-semibold text-[#1d1d1f]">Inquiry Sent via WhatsApp</h3>
                 <p className="mt-2 leading-relaxed text-[#86868b]">
-                  Thank you for reaching out. Renangi Vishnu Vardhan and the VV Digitals team will
-                  contact you within 24 hours.
+                  Thank you for reaching out! Your project details have been sent directly to WhatsApp (<b>+91 94910 02402</b>). Renangi Vishnu Vardhan and the VV Digitals team will reply shortly.
                 </p>
+                <button
+                  onClick={() => setSubmitted(false)}
+                  className="mt-6 rounded-full bg-[#f5f5f7] px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-[#1d1d1f] hover:bg-black hover:text-white transition-colors duration-200"
+                >
+                  Send Another Inquiry
+                </button>
               </div>
             </div>
           ) : (
             <form
               className="rounded-3xl border border-black/10 bg-white p-8 shadow-sm sm:p-10"
-              onSubmit={(e) => {
-                e.preventDefault()
-                setSubmitted(true)
-              }}
+              onSubmit={handleFormSubmit}
             >
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                 <div>
@@ -221,14 +252,14 @@ export default function Contact() {
                 </div>
                 <div>
                   <label htmlFor="phone" className="mb-1.5 block text-xs font-medium text-[#86868b]">
-                    Phone Number
+                    Phone / WhatsApp Number
                   </label>
                   <input
                     id="phone"
                     name="phone"
                     type="tel"
                     required
-                    placeholder="+91 63090 16428"
+                    placeholder="+91 94910 02402"
                     className={FIELD}
                   />
                 </div>
@@ -255,6 +286,7 @@ export default function Contact() {
                   id="details"
                   name="details"
                   rows={5}
+                  required
                   placeholder="Tell us about your brand, timeline, or goals..."
                   className={`${FIELD} resize-none`}
                 />
@@ -262,10 +294,10 @@ export default function Contact() {
 
               <button
                 type="submit"
-                className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-black px-6 py-4 text-sm font-medium text-white transition-all duration-300 hover:scale-[1.01] hover:bg-[#0066cc] active:scale-95"
+                className="mt-6 flex w-full items-center justify-center gap-2.5 rounded-full bg-[#1d1d1f] px-6 py-4 text-sm font-semibold text-white transition-all duration-300 hover:scale-[1.01] hover:bg-[#0066cc] active:scale-95 shadow-md"
               >
-                <Send className="h-4 w-4" />
-                Send Message
+                <MessageSquare className="h-4 w-4 text-[#25D366]" />
+                Let's Connect
               </button>
             </form>
           )}
@@ -279,7 +311,7 @@ export default function Contact() {
             &copy; 2026 VV Digitals. All rights reserved.
           </p>
           <p className="text-center text-sm text-[#86868b]">
-            Founded by Renangi Vishnu Vardhan &bull; Nellore, AP
+            Founded by Renangi Vishnu Vardhan &bull; Nellore, AP &bull; +91 94910 02402
           </p>
         </div>
       </div>

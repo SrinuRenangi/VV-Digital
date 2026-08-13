@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
-import { Sparkles, Star } from 'lucide-react'
+import { Quote, Sparkles, Star, Tag } from 'lucide-react'
 
-/* Scroll-reveal hook: fires once when the element enters the viewport. */
+/* Scroll-reveal hook: fires once when element enters viewport. */
 function useInView(threshold = 0.15) {
   const ref = useRef(null)
   const [inView, setInView] = useState(false)
@@ -41,50 +41,149 @@ function Reveal({ children, delay = 0, className = '' }) {
   )
 }
 
+/* Client Reviews Data featuring client details requested by user */
 const REVIEWS = [
   {
+    id: 'ssv-college',
     quote:
-      'VV Digitals completely transformed our brand presence in Nellore. The 4K video quality and social campaigns boosted our enrollment inquiries significantly.',
-    name: 'Srimannarayana College',
-    role: 'Institution Lead',
+      'VV Digitals completely transformed SSV Junior College’s brand reputation in the region. Their 4K commercial direction and targeted social campaigns delivered exceptional enrollment growth.',
+    name: 'Ashok Kumar Reddy',
+    role: 'Chairman & Correspondent',
+    clientName: 'SSV Junior College',
+    logo: '/logos/ssv-junior-college.png',
+    category: 'Personal Branding',
+    rating: 5,
   },
   {
+    id: 'sri-srinivasa-school',
     quote:
-      'Professional, fast, and transparent. They delivered custom commercial videos that looked like national ad campaigns within days.',
-    name: 'Amruthadhara Agencies',
+      'The video production and brand strategy from VV Digitals brought Sri Srinivasa Concept EM High School into the spotlight. Their cinematic storytelling resonated deeply with parents.',
+    name: 'Ashok Kumar Reddy',
+    role: 'Founder & Director',
+    clientName: 'Sri Srinivasa Concept EM High School',
+    logo: '/logos/sri-srinivasa-school.png',
+    category: 'Personal Branding',
+    rating: 5,
+  },
+  {
+    id: 'srivari-hospital',
+    quote:
+      'Building patient trust requires authentic, professional storytelling. VV Digitals created high-impact healthcare commercials that communicated our hospital services clearly.',
+    name: 'Krishna Prasad',
+    role: 'Managing Director & Lead Specialist',
+    clientName: 'Srivari Hospital',
+    logo: '/logos/srivari-hospital.png',
+    category: 'Personal Branding',
+    rating: 5,
+  },
+  {
+    id: 'dr-mobiles',
+    quote:
+      'Their promotional video edits and hyper-local ad strategies boosted our store footfalls immensely. VV Digitals understands digital marketing better than any agency in Nellore.',
+    name: 'Ramesh',
+    role: 'Founder & Managing Director',
+    clientName: 'DR Mobiles',
+    logo: '/logos/dr-mobiles.png',
+    category: 'Personal Branding',
+    rating: 5,
+  },
+  {
+    id: 'iris-premium',
+    quote:
+      'The customised label water bottle ad campaigns delivered fantastic brand reach. VV Digitals executed our joint digital marketing strategy with remarkable speed and precision.',
+    name: 'GMS & Operations Lead',
+    role: 'Brand Operations Lead',
+    clientName: 'IRIS Premium Water',
+    logo: '/logos/iris-premium-water.png',
+    category: 'Digital Marketing',
+    rating: 5,
+  },
+  {
+    id: 'kk-enterprises',
+    quote:
+      'As authorized distributors of Oceana, market presence is key. VV Digitals crafted commercial videos and targeted campaigns that significantly boosted distributor inquiries.',
+    name: 'Distribution Lead',
     role: 'Managing Partner',
+    clientName: 'KK Enterprises',
+    logo: '/logos/kk-enterprises.png',
+    category: 'Distribution Partner',
+    rating: 5,
   },
   {
+    id: 'qb-beverages',
     quote:
-      'The team understands storytelling and digital targeting better than any regional agency we\u2019ve worked with. Highly recommended!',
-    name: 'Senthamizh Residency',
-    role: 'General Manager',
+      'Outstanding commitment to quality! VV Digitals helped establish Quality Beverages as a trusted regional brand through crisp video commercials and social outreach.',
+    name: 'Quality Beverages Team',
+    role: 'Operations Lead',
+    clientName: 'QB Quality Beverages',
+    logo: '/logos/qb-quality-beverages.png',
+    category: 'Authorized Distributor',
+    rating: 5,
+  },
+  {
+    id: 'srimannarayana-school',
+    quote:
+      'From event coverage to institutional ad shoots, VV Digitals delivered world-class video production that elevated our school’s brand authority across SPSR Nellore District.',
+    name: 'School Management',
+    role: 'Correspondent',
+    clientName: 'Srimannarayana EM High School',
+    logo: '/logos/srimannarayana-school.png',
+    category: 'Personal Branding',
+    rating: 5,
   },
 ]
 
-function ReviewCard({ review, delay }) {
+function ReviewCard({ review }) {
   return (
-    <Reveal delay={delay} className="h-full">
-      <div className="group flex h-full flex-col rounded-3xl border border-black/10 bg-[#f5f5f7] p-8 transition-all duration-300 hover:-translate-y-1.5 hover:border-black/15 hover:shadow-lg">
-        {/* Rating stars */}
-        <div className="flex items-center gap-1">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <Star key={i} className="h-4 w-4 fill-[#0066cc] text-[#0066cc]" />
-          ))}
+    <div className="group relative flex h-full min-w-[340px] max-w-[420px] flex-col justify-between rounded-3xl border border-black/10 bg-white p-7 shadow-xs backdrop-blur-md transition-all duration-300 hover:-translate-y-1.5 hover:border-[#0066cc]/30 hover:shadow-xl sm:min-w-[380px] sm:p-8">
+      {/* Top Header: Rating Stars & Category Pill */}
+      <div>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-1">
+            {Array.from({ length: review.rating }).map((_, i) => (
+              <Star key={i} className="h-4 w-4 fill-[#0066cc] text-[#0066cc]" />
+            ))}
+          </div>
+          <span className="inline-flex items-center gap-1 rounded-full border border-[#0066cc]/20 bg-[#0066cc]/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#0066cc]">
+            <Tag className="h-3 w-3" />
+            {review.category}
+          </span>
         </div>
 
         {/* Quote */}
-        <p className="mt-5 flex-1 text-base leading-relaxed text-[#1d1d1f]/80">
-          &ldquo;{review.quote}&rdquo;
-        </p>
-
-        {/* Author metadata */}
-        <div className="mt-6 border-t border-black/10 pt-5">
-          <p className="font-semibold text-[#1D1D1F]">{review.name}</p>
-          <p className="mt-0.5 text-xs text-[#86868b]">{review.role}</p>
+        <div className="relative mt-6">
+          <Quote className="absolute -left-2 -top-3 h-8 w-8 text-[#0066cc]/10" />
+          <p className="relative z-10 text-sm leading-relaxed text-[#1d1d1f]/85 sm:text-base">
+            &ldquo;{review.quote}&rdquo;
+          </p>
         </div>
       </div>
-    </Reveal>
+
+      {/* Author & Client Metadata Footer */}
+      <div className="mt-8 flex items-center gap-4 border-t border-black/10 pt-5">
+        {/* Client Logo Avatar */}
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-black/5 bg-[#f8f9fa] p-1.5 transition-colors duration-200 group-hover:border-[#0066cc]/20 group-hover:bg-white">
+          <img
+            src={review.logo}
+            alt={review.clientName}
+            className="max-h-full max-w-full object-contain"
+            loading="lazy"
+          />
+        </div>
+
+        <div className="flex min-w-0 flex-1 flex-col">
+          <p className="truncate text-base font-bold text-[#1d1d1f] group-hover:text-[#0066cc] transition-colors duration-200">
+            {review.name}
+          </p>
+          <p className="truncate text-xs font-semibold text-[#1d1d1f]/75">
+            {review.clientName}
+          </p>
+          <p className="truncate text-[11px] font-medium text-[#86868b]">
+            {review.role}
+          </p>
+        </div>
+      </div>
+    </div>
   )
 }
 
@@ -92,33 +191,43 @@ export default function Reviews() {
   return (
     <section
       id="reviews"
-      className="mx-auto max-w-6xl border-t border-black/10 px-6 py-24 sm:px-10 sm:py-32"
+      className="relative overflow-hidden border-t border-black/10 bg-gradient-to-b from-white via-[#f5f5f7]/60 to-white py-24 sm:py-32"
     >
-      {/* Eyebrow Badge */}
-      <Reveal>
-        <span className="inline-flex items-center gap-2 rounded-full bg-[#f5f5f7] px-4 py-2 text-xs font-semibold uppercase tracking-[0.15em] text-[#86868b]">
-          <Sparkles className="h-4 w-4 text-[#0066cc]" />
-          Client Feedback
-        </span>
-      </Reveal>
+      {/* Ambient Radial Background Blur */}
+      <div className="pointer-events-none absolute right-0 top-1/3 h-96 w-96 rounded-full bg-[#0066cc]/5 blur-3xl" />
 
       {/* Section Header */}
-      <Reveal delay={100}>
-        <h2 className="mt-6 mb-4 text-4xl font-semibold tracking-tight text-[#1d1d1f] sm:text-6xl">
-          What our partners say.
-        </h2>
-      </Reveal>
-      <Reveal delay={180}>
-        <p className="mb-16 text-lg font-normal text-[#86868b]">
-          Real feedback from regional business owners, institution leads, and brand directors.
-        </p>
-      </Reveal>
+      <div className="mx-auto max-w-6xl px-6 sm:px-10">
+        <Reveal>
+          <span className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-[#86868b] shadow-xs">
+            <Sparkles className="h-3.5 w-3.5 text-[#0066cc]" />
+            Client Feedback & Testimonials
+          </span>
+        </Reveal>
 
-      {/* 3-Column Card Grid */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-8">
-        {REVIEWS.map((review, i) => (
-          <ReviewCard key={review.name} review={review} delay={i * 120} />
-        ))}
+        <Reveal delay={100}>
+          <h2 className="mt-5 text-4xl font-extrabold tracking-tight text-[#1d1d1f] sm:text-6xl">
+            What our partners say.
+          </h2>
+        </Reveal>
+        <Reveal delay={180}>
+          <p className="mt-4 max-w-2xl text-base text-[#86868b] sm:text-lg">
+            Real feedback from regional business owners, institution leads, doctors, and brand directors.
+          </p>
+        </Reveal>
+      </div>
+
+      {/* Infinite Horizontal Marquee Track for Client Reviews */}
+      <div className="marquee-mask mt-16 w-full overflow-hidden py-4">
+        <div className="flex w-max animate-marquee gap-6 pr-6 pause-on-hover">
+          {[0, 1].map((half) => (
+            <div key={half} aria-hidden={half === 1} className="flex items-center gap-6">
+              {REVIEWS.map((review) => (
+                <ReviewCard key={`${half}-${review.id}`} review={review} />
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   )

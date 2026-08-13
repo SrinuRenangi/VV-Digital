@@ -34,9 +34,7 @@ export default function Navbar() {
             className="h-10 w-auto shrink-0"
             loading="eager"
           />
-          <span className="hidden rounded-full bg-black/5 px-2 py-0.5 text-[10px] font-semibold tracking-wide text-[#1d1d1f]/70 lg:inline-flex">
-            AP, IN
-          </span>
+
         </a>
 
         {/* Center: links */}
@@ -74,9 +72,8 @@ export default function Navbar() {
 
       {/* Mobile overlay menu — expands from the capsule */}
       <div
-        className={`w-full overflow-hidden transition-all duration-300 ease-in-out md:hidden ${
-          menuOpen ? 'max-h-[28rem] opacity-100' : 'max-h-0 opacity-0'
-        }`}
+        className={`w-full overflow-hidden transition-all duration-300 ease-in-out md:hidden ${menuOpen ? 'max-h-[28rem] opacity-100' : 'max-h-0 opacity-0'
+          }`}
       >
         <div className="mt-3 rounded-3xl border border-black/10 bg-white/95 p-3 shadow-lg backdrop-blur-xl">
           <nav aria-label="Mobile">

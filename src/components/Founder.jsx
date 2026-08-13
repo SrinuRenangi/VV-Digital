@@ -41,10 +41,79 @@ function Reveal({ children, delay = 0, className = '' }) {
   )
 }
 
+// Vapor / Smoke Condensation Text animation on scroll
+function VaporText({ text, progress, wordOffset = 0 }) {
+  const words = text.split(' ')
+  const vaporFactor = Math.max(0, 1 - progress)
+
+  return (
+    <span aria-label={text} className="inline-block select-none">
+      {words.map((word, wIdx) => (
+        <span key={wIdx} className="inline-block whitespace-nowrap mr-[0.28em]">
+          {Array.from(word).map((char, cIdx) => {
+            const seed = (wIdx * 17 + cIdx * 11 + wordOffset) % 100
+            const floatOffset = (seed % 2 === 0 ? 1 : -1) * (18 + (seed % 14))
+
+            // Vapor physics:
+            // High blur, upward smoke float, expanded scale, low opacity when entering view
+            // Condenses into sharp, crisp text as user scrolls into section!
+            const ty = -vaporFactor * floatOffset
+            const blur = vaporFactor * 12
+            const scale = 1 + vaporFactor * 0.3
+            const opacity = Math.min(1, Math.max(0.1, 1 - vaporFactor * 0.9))
+
+            return (
+              <span
+                key={cIdx}
+                aria-hidden="true"
+                style={{
+                  display: 'inline-block',
+                  transform: `translate3d(0, ${ty}px, 0) scale(${scale})`,
+                  filter: `blur(${blur}px)`,
+                  opacity: opacity,
+                  willChange: 'transform, opacity, filter',
+                  transition: 'transform 0.08s ease-out, opacity 0.08s ease-out, filter 0.08s ease-out',
+                }}
+              >
+                {char}
+              </span>
+            )
+          })}
+        </span>
+      ))}
+    </span>
+  )
+}
+
 export default function Founder() {
+  const [scrollProgress, setScrollProgress] = useState(0)
+  const sectionRef = useRef(null)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!sectionRef.current) return
+      const rect = sectionRef.current.getBoundingClientRect()
+      const windowHeight = window.innerHeight || 800
+
+      const startPoint = windowHeight * 0.95
+      const endPoint = windowHeight * 0.35
+
+      const progress = Math.min(
+        Math.max((startPoint - rect.top) / (startPoint - endPoint), 0),
+        1
+      )
+      setScrollProgress(progress)
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll()
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
     <section
       id="founder"
+      ref={sectionRef}
       className="relative overflow-hidden border-y border-black/10 bg-[#f5f5f7]/60 py-24 sm:py-32"
     >
       {/* Background Layer: top-right radial glow */}
@@ -70,47 +139,20 @@ export default function Founder() {
             <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-14">
               {/* Left Column */}
               <div className="lg:col-span-5">
-                {/* Photo Frame: inline SVG clip-path mask + fallback monogram */}
-                <div className="relative inline-block">
-                  <div className="relative h-40 w-40 overflow-hidden rounded-3xl bg-gradient-to-br from-[#1d1d1f] to-[#2c2c2e] p-1 shadow-xl transition-transform duration-500 group-hover:scale-[1.02] sm:h-48 sm:w-48">
-                    <svg
-                      className="h-full w-full"
-                      viewBox="0 0 176 176"
-                      role="img"
-                      aria-label="Renangi Vishnu Vardhan — Founder & Creative Director"
-                    >
-                      <defs>
-                        <linearGradient id="founderBg" x1="0" y1="0" x2="1" y2="1">
-                          <stop offset="0%" stopColor="#2c2c2e" />
-                          <stop offset="100%" stopColor="#1d1d1f" />
-                        </linearGradient>
-                        <clipPath id="founderClip">
-                          <rect x="0" y="0" width="176" height="176" rx="20" />
-                        </clipPath>
-                      </defs>
-                      <g clipPath="url(#founderClip)">
-                        <rect width="176" height="176" fill="url(#founderBg)" />
-                        <circle cx="150" cy="26" r="86" fill="#0066cc" opacity="0.18" />
-                        <circle cx="20" cy="150" r="70" fill="#0066cc" opacity="0.1" />
-                        <text
-                          x="88"
-                          y="106"
-                          textAnchor="middle"
-                          fontFamily="Inter, ui-sans-serif, sans-serif"
-                          fontWeight="800"
-                          fontSize="52"
-                          letterSpacing="3"
-                          fill="#ffffff"
-                        >
-                          RVV
-                        </text>
-                      </g>
-                    </svg>
+                {/* Executive Founder Portrait */}
+                <div className="relative block w-full max-w-[280px] sm:inline-block sm:w-auto">
+                  <div className="relative aspect-square w-full overflow-hidden rounded-3xl border border-black/10 bg-[#f8f9fa] shadow-2xl transition-transform duration-500 group-hover:scale-[1.02] sm:h-72 sm:w-72 sm:aspect-auto">
+                    <img
+                      src="/renangi-vishnu-vardhan.png"
+                      alt="Renangi Vishnu Vardhan — Founder & Creative Director"
+                      className="h-full w-full rounded-3xl object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                      loading="eager"
+                    />
                   </div>
 
                   {/* Floating FOUNDER badge */}
                   <span className="absolute -bottom-3 left-4 rounded-full bg-[#0066cc] px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-white shadow-lg">
-                    Founder
+                    Founder &amp; Director
                   </span>
                 </div>
 
@@ -135,9 +177,11 @@ export default function Founder() {
               {/* Right Column */}
               <div className="lg:col-span-7">
                 <blockquote className="border-l-2 border-[#0066cc] pl-5 text-xl font-normal leading-relaxed text-[#1d1d1f] sm:pl-6 sm:text-2xl">
-                  Every business has a story worth telling. My goal with VV Digitals is to give
-                  brands the visual polish and marketing horsepower they need to stand alongside
-                  industry leaders.
+                  <VaporText
+                    text="Every business has a story worth telling. My goal with VV Digitals is to give brands the visual polish and marketing horsepower they need to stand alongside industry leaders."
+                    progress={scrollProgress}
+                    wordOffset={4}
+                  />
                 </blockquote>
 
                 <p className="mt-6 mb-8 text-base leading-relaxed text-[#86868b] sm:text-lg">
@@ -148,11 +192,11 @@ export default function Founder() {
                 {/* Action Buttons */}
                 <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                   <a
-                    href="tel:+916309016428"
+                    href="tel:+919491002402"
                     className="group inline-flex items-center gap-2 rounded-full bg-black px-6 py-3.5 text-sm font-medium text-white transition-all duration-300 hover:scale-[1.03] active:scale-95"
                   >
                     <Phone className="h-4 w-4 text-[#0066cc]" />
-                    Call +91 63090 16428
+                    Call +91 94910 02402
                     <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                   </a>
                   <a

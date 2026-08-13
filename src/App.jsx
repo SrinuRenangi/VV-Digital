@@ -9,7 +9,7 @@ import Contact from './components/Contact'
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen w-full max-w-full overflow-x-clip bg-white">
       <Navbar />
 
       {/* Section 2: Hero */}
