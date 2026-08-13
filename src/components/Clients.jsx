@@ -175,8 +175,10 @@ export default function Clients() {
           </h2>
         </Reveal>
         <Reveal delay={120}>
-          <p className="max-w-md text-center text-sm leading-relaxed text-[#86868b] sm:text-base md:text-right">
-            Every client receives our team&rsquo;s direct focus, custom content strategy, and personal brand development.
+          <p className="flex flex-col text-center text-xs leading-relaxed text-[#86868b] sm:text-sm md:text-base md:text-right">
+            <span className="block whitespace-nowrap">Every client receives our team&rsquo;s direct focus,</span>
+            <span className="block whitespace-nowrap">custom content strategy, and</span>
+            <span className="block whitespace-nowrap">personal brand development.</span>
           </p>
         </Reveal>
       </div>

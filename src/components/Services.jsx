@@ -5,7 +5,6 @@ import {
   Camera,
   CheckCircle2,
   ChevronRight,
-  Layers,
   Megaphone,
   Scissors,
   Sparkles,
@@ -13,7 +12,7 @@ import {
   Zap,
 } from 'lucide-react'
 
-/* Scroll-reveal hook: fires once when element enters viewport. */
+/* Scroll-reveal hook for header elements */
 function useInView(threshold = 0.15) {
   const ref = useRef(null)
   const [inView, setInView] = useState(false)
@@ -37,7 +36,6 @@ function useInView(threshold = 0.15) {
   return { ref, inView }
 }
 
-/* Staggered fade-up wrapper. */
 function Reveal({ children, delay = 0, className = '' }) {
   const { ref, inView } = useInView()
   return (
@@ -63,8 +61,6 @@ const SERVICES_DATA = [
     description:
       'We handle complete on-field commercial shoots, high-end product photography, and brand documentaries using cinema-grade equipment.',
     icon: Camera,
-    accent: 'from-[#0066cc]/20 via-[#0066cc]/5 to-transparent',
-    badgeColor: 'border-[#0066cc]/30 bg-[#0066cc]/10 text-[#0066cc]',
     stat: '150+ Shoots Executed',
     highlights: [
       '4K & 60FPS Cinema Filming',
@@ -83,8 +79,6 @@ const SERVICES_DATA = [
     description:
       'From Meta ad funnels to hyper-targeted Google search ads, we optimize every rupee of ad spend to maximize customer acquisition.',
     icon: TrendingUp,
-    accent: 'from-[#2563eb]/20 via-[#3b82f6]/5 to-transparent',
-    badgeColor: 'border-blue-500/30 bg-blue-500/10 text-blue-600',
     stat: '4.2x Average Campaign ROI',
     highlights: [
       'Meta & Instagram Ad Funnels',
@@ -103,8 +97,6 @@ const SERVICES_DATA = [
     description:
       'Complete end-to-end personal branding, commercial launch campaigns, visual identity assets, and influencer collaboration management.',
     icon: Megaphone,
-    accent: 'from-[#7c3aed]/20 via-[#8b5cf6]/5 to-transparent',
-    badgeColor: 'border-purple-500/30 bg-purple-500/10 text-purple-600',
     stat: '35+ Regional Brands Built',
     highlights: [
       'Commercial Launch Strategy',
@@ -123,8 +115,6 @@ const SERVICES_DATA = [
     description:
       'Our post-production suite transforms raw video footage into polished, high-engagement content engineered for modern social algorithms.',
     icon: Scissors,
-    accent: 'from-[#0284c7]/20 via-[#38bdf8]/5 to-transparent',
-    badgeColor: 'border-sky-500/30 bg-sky-500/10 text-sky-600',
     stat: '100% 4K Mastered Outputs',
     highlights: [
       'DaVinci Resolve Color Grading',
@@ -139,34 +129,66 @@ const SERVICES_DATA = [
 export default function Services() {
   const [activeCardIndex, setActiveCardIndex] = useState(0)
   const [expandedId, setExpandedId] = useState('production')
+  const sectionRef = useRef(null)
   const cardRefs = useRef([])
+  const isClickingRef = useRef(false)
 
   const toggleExpand = (id) => {
     setExpandedId((prev) => (prev === id ? null : id))
   }
 
+  // Handle clicking left-menu item: smooth scrolls window forward or reverse to trigger sticky stacking/unstacking animation
   const handleSelectService = (index) => {
     const targetService = SERVICES_DATA[index]
     setActiveCardIndex(index)
-    setExpandedId(targetService.id) // Automatically open & expand the selected service card!
+    setExpandedId(targetService.id)
+    isClickingRef.current = true
 
-    if (cardRefs.current[index]) {
-      const cardEl = cardRefs.current[index]
-      const yOffset = -100 // Header sticky alignment offset
-      const y = cardEl.getBoundingClientRect().top + window.pageYOffset + yOffset
-      window.scrollTo({ top: y, behavior: 'smooth' })
+    if (sectionRef.current) {
+      const sectionRect = sectionRef.current.getBoundingClientRect()
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+      const sectionTop = sectionRect.top + scrollTop
+
+      // Absolute Y position calculation for both forward and reverse navigation
+      const cardHeightSpacing = 460
+      const targetY = sectionTop + 140 + index * cardHeightSpacing
+
+      window.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' })
     }
+
+    setTimeout(() => {
+      isClickingRef.current = false
+    }, 850)
   }
+
+  // Passive scroll sync: highlights left-menu item as user scrolls up or down through sticky cards
+  useEffect(() => {
+    const handleScrollSync = () => {
+      if (isClickingRef.current || !cardRefs.current.length) return
+      
+      for (let i = cardRefs.current.length - 1; i >= 0; i--) {
+        const el = cardRefs.current[i]
+        if (!el) continue
+        const rect = el.getBoundingClientRect()
+        const stickyTopPx = 112 + i * 32
+        
+        if (rect.top <= stickyTopPx + 80) {
+          setActiveCardIndex(i)
+          break
+        }
+      }
+    }
+
+    window.addEventListener('scroll', handleScrollSync, { passive: true })
+    return () => window.removeEventListener('scroll', handleScrollSync)
+  }, [])
 
   return (
     <section
       id="services"
-      className="relative border-t border-black/10 bg-gradient-to-b from-white via-[#f5f5f7]/60 to-white py-24 sm:py-32"
+      ref={sectionRef}
+      className="relative border-t border-black/10 bg-white py-24 sm:py-32"
     >
-      {/* Background Ambient Radial Glow */}
-      <div className="pointer-events-none absolute -left-40 top-1/4 h-96 w-96 rounded-full bg-[#0066cc]/5 blur-3xl" />
-      <div className="pointer-events-none absolute -right-40 bottom-1/4 h-96 w-96 rounded-full bg-purple-500/5 blur-3xl" />
-
       <div className="mx-auto max-w-7xl px-6 sm:px-10">
         {/* 50/50 Split Grid Container */}
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
@@ -174,8 +196,8 @@ export default function Services() {
           {/* Left Column (50% Sticky Text & Navigation Header) */}
           <div className="lg:col-span-5 lg:sticky lg:top-28 lg:self-start lg:py-4">
             <Reveal>
-              <span className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-[#86868b] shadow-xs">
-                <Sparkles className="h-3.5 w-3.5 text-[#0066cc]" />
+              <span className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-[#f5f5f7] px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-[#1d1d1f] shadow-xs">
+                <Sparkles className="h-3.5 w-3.5 text-black" />
                 Core Capabilities
               </span>
             </Reveal>
@@ -203,10 +225,10 @@ export default function Services() {
                     <button
                       key={service.id}
                       onClick={() => handleSelectService(idx)}
-                      className={`group flex w-full items-center justify-between rounded-2xl border px-4 py-3 text-left text-xs font-bold transition-all duration-300 ${
+                      className={`group flex w-full items-center justify-between rounded-2xl border px-4 py-3.5 text-left text-xs font-bold transition-all duration-300 ${
                         activeCardIndex === idx
-                          ? 'border-[#0066cc] bg-[#0066cc]/10 text-[#0066cc] shadow-md ring-2 ring-[#0066cc]/20'
-                          : 'border-black/5 bg-white text-[#86868b] hover:border-black/15 hover:bg-[#f5f5f7] hover:text-[#1d1d1f]'
+                          ? 'border-black bg-black text-white shadow-lg scale-[1.02]'
+                          : 'border-black/10 bg-white text-[#86868b] hover:border-black/30 hover:bg-[#f5f5f7] hover:text-[#1d1d1f]'
                       }`}
                     >
                       <div className="flex items-center gap-3">
@@ -215,7 +237,7 @@ export default function Services() {
                       </div>
                       <ChevronRight
                         className={`h-4 w-4 transition-transform duration-300 ${
-                          activeCardIndex === idx ? 'translate-x-1 text-[#0066cc]' : 'opacity-40'
+                          activeCardIndex === idx ? 'translate-x-1 text-white' : 'opacity-40'
                         }`}
                       />
                     </button>
@@ -229,22 +251,22 @@ export default function Services() {
               <div className="mt-8 pt-4">
                 <a
                   href="#contact"
-                  className="inline-flex items-center gap-3 rounded-full bg-[#1d1d1f] px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-white shadow-md transition-all duration-300 hover:bg-[#0066cc] hover:shadow-xl"
+                  className="inline-flex items-center gap-3 rounded-full bg-black px-7 py-4 text-xs font-bold uppercase tracking-wider text-white shadow-md transition-all duration-300 hover:bg-[#1d1d1f] hover:scale-[1.03] active:scale-95"
                 >
                   <span>Explore Custom Package</span>
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowRight className="h-4 w-4 text-white" />
                 </a>
               </div>
             </Reveal>
           </div>
 
-          {/* Right Column (50% Smooth Stacking Cards Column) */}
+          {/* Right Column (50% Sticky Stacking Cards Column) */}
           <div className="relative flex flex-col gap-8 pb-12 lg:col-span-7">
             {SERVICES_DATA.map((service, idx) => {
               const IconComponent = service.icon
               const isExpanded = expandedId === service.id
 
-              // Dynamic sticky top offset so cards stack smoothly over each other
+              // Dynamic sticky top offset so cards pop up and stack smoothly over each other
               const stickyTopStyle = {
                 top: `calc(7rem + ${idx * 2}rem)`,
                 zIndex: (idx + 1) * 10,
@@ -263,44 +285,37 @@ export default function Services() {
                       setActiveCardIndex(idx)
                       toggleExpand(service.id)
                     }}
-                    className={`group relative flex flex-col justify-between overflow-hidden rounded-3xl border bg-white/95 p-8 shadow-[0_-10px_35px_rgba(0,0,0,0.08),0_20px_50px_rgba(0,0,0,0.12)] backdrop-blur-xl transition-all duration-500 cursor-pointer sm:p-10 ${
+                    className={`group relative flex flex-col justify-between overflow-hidden rounded-3xl border bg-white p-8 backdrop-blur-xl transition-all duration-500 cursor-pointer sm:p-10 ${
                       activeCardIndex === idx || isExpanded
-                        ? 'border-[#0066cc] ring-2 ring-[#0066cc]/20 shadow-2xl'
-                        : 'border-black/10 hover:border-[#0066cc]/40'
+                        ? 'border-black shadow-2xl ring-1 ring-black/10 -translate-y-1'
+                        : 'border-black/10 shadow-[0_-10px_30px_rgba(0,0,0,0.06),0_15px_40px_rgba(0,0,0,0.08)] hover:border-black/30 hover:shadow-xl'
                     }`}
                   >
-                    {/* Background Subtle Gradient Glow */}
-                    <div
-                      className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${service.accent} opacity-0 transition-opacity duration-500 group-hover:opacity-100`}
-                    />
-
                     {/* Card Header */}
                     <div>
                       <div className="flex items-center justify-between">
-                        <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-black/5 bg-[#f5f5f7] text-[#1d1d1f] transition-all duration-300 group-hover:bg-[#0066cc] group-hover:text-white group-hover:shadow-md">
+                        <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-black/10 bg-[#f5f5f7] text-[#1d1d1f] transition-all duration-300 group-hover:bg-black group-hover:text-white group-hover:shadow-md">
                           <IconComponent className="h-7 w-7" />
                         </div>
-                        <span className="font-mono text-base font-extrabold tracking-wider text-[#86868b]/70">
+                        <span className="font-mono text-base font-extrabold tracking-wider text-[#86868b]">
                           {service.num}
                         </span>
                       </div>
 
-                      {/* Category & Stat Badges */}
+                      {/* Category & Stat Badges (Strict Monochrome Black & White) */}
                       <div className="mt-6 flex flex-wrap items-center gap-2">
-                        <span
-                          className={`inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1 text-[11px] font-bold uppercase tracking-wider ${service.badgeColor}`}
-                        >
-                          <Zap className="h-3 w-3" />
+                        <span className="inline-flex items-center gap-1.5 rounded-full border border-black/10 bg-[#f5f5f7] px-3.5 py-1 text-[11px] font-bold uppercase tracking-wider text-[#1d1d1f]">
+                          <Zap className="h-3 w-3 text-black" />
                           {service.category}
                         </span>
-                        <span className="inline-flex items-center gap-1.5 rounded-full border border-black/10 bg-[#f5f5f7] px-3.5 py-1 text-[11px] font-semibold text-[#1d1d1f]">
-                          <BarChart3 className="h-3 w-3 text-[#0066cc]" />
+                        <span className="inline-flex items-center gap-1.5 rounded-full border border-black/10 bg-white px-3.5 py-1 text-[11px] font-semibold text-[#1d1d1f]">
+                          <BarChart3 className="h-3 w-3 text-black" />
                           {service.stat}
                         </span>
                       </div>
 
                       {/* Title & Tagline */}
-                      <h3 className="mt-5 text-2xl font-bold tracking-tight text-[#1d1d1f] transition-colors duration-200 group-hover:text-[#0066cc] sm:text-3xl">
+                      <h3 className="mt-5 text-2xl font-bold tracking-tight text-[#1d1d1f] transition-colors duration-200 group-hover:text-black sm:text-3xl">
                         {service.title}
                       </h3>
                       <p className="mt-3 text-sm leading-relaxed text-[#86868b] sm:text-base">
@@ -308,15 +323,15 @@ export default function Services() {
                       </p>
 
                       {/* Core Highlights List */}
-                      <div className="mt-6 border-t border-black/5 pt-6">
+                      <div className="mt-6 border-t border-black/10 pt-6">
                         <p className="text-xs font-bold uppercase tracking-wider text-[#1d1d1f]">
                           Core Capabilities
                         </p>
                         <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
                           {service.highlights.map((item) => (
                             <li key={item} className="flex items-center gap-2.5">
-                              <CheckCircle2 className="h-4 w-4 shrink-0 text-[#0066cc]" />
-                              <span className="text-xs font-medium text-[#1d1d1f]/85 sm:text-sm">
+                              <CheckCircle2 className="h-4 w-4 shrink-0 text-black" />
+                              <span className="text-xs font-medium text-[#1d1d1f]/90 sm:text-sm">
                                 {item}
                               </span>
                             </li>
@@ -326,21 +341,21 @@ export default function Services() {
 
                       {/* Expandable Deliverables Drawer */}
                       {isExpanded && (
-                        <div className="mt-6 rounded-2xl border border-[#0066cc]/20 bg-[#0066cc]/5 p-5 transition-all duration-300 animate-in fade-in slide-in-from-top-2">
-                          <p className="text-xs font-bold uppercase tracking-wider text-[#0066cc]">
-                            Deliverables & Scope
+                        <div className="mt-6 rounded-2xl border border-black/10 bg-[#f5f5f7] p-5 transition-all duration-300 animate-in fade-in slide-in-from-top-2">
+                          <p className="text-xs font-bold uppercase tracking-wider text-[#1d1d1f]">
+                            Deliverables &amp; Scope
                           </p>
                           <div className="mt-3 flex flex-wrap gap-2">
                             {service.deliverables.map((deliv) => (
                               <span
                                 key={deliv}
-                                className="inline-flex items-center rounded-lg border border-[#0066cc]/20 bg-white px-3 py-1 text-xs font-semibold text-[#1d1d1f] shadow-2xs"
+                                className="inline-flex items-center rounded-lg border border-black/10 bg-white px-3 py-1 text-xs font-semibold text-[#1d1d1f] shadow-2xs"
                               >
                                 {deliv}
                               </span>
                             ))}
                           </div>
-                          <p className="mt-3 text-xs text-[#86868b]">
+                          <p className="mt-3 text-xs leading-relaxed text-[#86868b]">
                             {service.description}
                           </p>
                         </div>
@@ -354,61 +369,22 @@ export default function Services() {
                           e.stopPropagation()
                           toggleExpand(service.id)
                         }}
-                        className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#0066cc] hover:underline"
+                        className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-black hover:underline"
                       >
                         <span>{isExpanded ? 'Hide Scope' : 'View Deliverables'}</span>
                         <ChevronRight
-                          className={`h-4 w-4 transition-transform duration-300 ${
-                            isExpanded ? 'rotate-90' : ''
+                          className={`h-3.5 w-3.5 transition-transform duration-300 ${
+                            isExpanded ? 'rotate-90 text-black' : ''
                           }`}
                         />
                       </button>
-
-                      <a
-                        href="#contact"
-                        onClick={(e) => e.stopPropagation()}
-                        className="inline-flex items-center gap-2 rounded-full bg-[#1d1d1f] px-4.5 py-2 text-xs font-semibold text-white transition-all duration-300 hover:bg-[#0066cc] hover:shadow-md"
-                      >
-                        <span>Book Service</span>
-                        <ArrowRight className="h-3.5 w-3.5" />
-                      </a>
                     </div>
                   </div>
                 </div>
               )
             })}
           </div>
-
         </div>
-
-        {/* Bottom Callout Banner */}
-        <Reveal delay={300} className="mt-20">
-          <div className="relative overflow-hidden rounded-3xl border border-black/10 bg-[#1d1d1f] p-8 text-white shadow-2xl sm:p-12">
-            <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#0066cc]/30 blur-3xl" />
-
-            <div className="relative z-10 flex flex-col items-center justify-between gap-8 text-center md:flex-row md:text-left">
-              <div>
-                <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#38bdf8]">
-                  <Layers className="h-3.5 w-3.5" />
-                  Custom Brand Package
-                </span>
-                <h3 className="mt-4 text-2xl font-bold tracking-tight text-white sm:text-4xl">
-                  Need a tailored commercial or growth strategy?
-                </h3>
-                <p className="mt-2 text-sm text-white/70 sm:text-base">
-                  We design custom video production and ad campaign packages tailored to your brand&rsquo;s goals and budget.
-                </p>
-              </div>
-
-              <a
-                href="#contact"
-                className="shrink-0 rounded-full bg-white px-8 py-4 text-sm font-bold uppercase tracking-wider text-[#1d1d1f] shadow-lg transition-all duration-300 hover:bg-[#0066cc] hover:text-white hover:shadow-2xl"
-              >
-                Request Free Consultation
-              </a>
-            </div>
-          </div>
-        </Reveal>
       </div>
     </section>
   )

@@ -6,6 +6,7 @@ import Services from './components/Services'
 import Clients from './components/Clients'
 import Reviews from './components/Reviews'
 import Contact from './components/Contact'
+import Footer from './components/Footer'
 
 export default function App() {
   return (
@@ -30,8 +31,11 @@ export default function App() {
       {/* Section 7: Reviews */}
       <Reviews />
 
-      {/* Section 8: Contact & Footer */}
+      {/* Section 8: Contact */}
       <Contact />
+
+      {/* Section 9: Official Agency Footer */}
+      <Footer />
     </div>
   )
 }

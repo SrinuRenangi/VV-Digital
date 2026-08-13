@@ -141,11 +141,11 @@ export default function Founder() {
               <div className="lg:col-span-5">
                 {/* Executive Founder Portrait */}
                 <div className="relative block w-full max-w-[280px] sm:inline-block sm:w-auto">
-                  <div className="relative aspect-square w-full overflow-hidden rounded-3xl border border-black/10 bg-[#f8f9fa] shadow-2xl transition-transform duration-500 group-hover:scale-[1.02] sm:h-72 sm:w-72 sm:aspect-auto">
+                  <div className="relative aspect-square w-full overflow-hidden rounded-3xl border border-black/10 bg-[#f8f9fa] shadow-2xl transition-transform duration-500 group-hover:scale-[1.02] sm:h-72 sm:w-72 sm:aspect-square">
                     <img
-                      src="/renangi-vishnu-vardhan.png"
+                      src="/Vishnu pic.svg"
                       alt="Renangi Vishnu Vardhan — Founder & Creative Director"
-                      className="h-full w-full rounded-3xl object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                      className="h-full w-full rounded-3xl object-cover object-top p-0 m-0 border-none scale-[1.18] transition-transform duration-500 group-hover:scale-[1.24]"
                       loading="eager"
                     />
                   </div>

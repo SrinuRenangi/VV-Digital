@@ -242,7 +242,11 @@ export default function About() {
   const sectionRef = useRef(null)
 
   useEffect(() => {
-    const handleScroll = () => {
+    let animId
+    let targetProgress = 0
+    let currentProgress = 0
+
+    const updateTarget = () => {
       if (!sectionRef.current) return
       const rect = sectionRef.current.getBoundingClientRect()
       const windowHeight = window.innerHeight || 800
@@ -251,16 +255,30 @@ export default function About() {
       const startPoint = windowHeight * 0.95
       const endPoint = windowHeight * 0.35
 
-      const progress = Math.min(
+      targetProgress = Math.min(
         Math.max((startPoint - rect.top) / (startPoint - endPoint), 0),
         1
       )
-      setScrollProgress(progress)
     }
 
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    handleScroll()
-    return () => window.removeEventListener('scroll', handleScroll)
+    // High-performance requestAnimationFrame lerp loop tuned for fluid smooth scrolling
+    const loop = () => {
+      const diff = targetProgress - currentProgress
+      if (Math.abs(diff) > 0.0001) {
+        currentProgress += diff * 0.1
+        setScrollProgress(currentProgress)
+      }
+      animId = requestAnimationFrame(loop)
+    }
+
+    window.addEventListener('scroll', updateTarget, { passive: true })
+    updateTarget()
+    loop()
+
+    return () => {
+      window.removeEventListener('scroll', updateTarget)
+      cancelAnimationFrame(animId)
+    }
   }, [])
 
   return (
