@@ -32,8 +32,9 @@ function Reveal({ children, delay = 0, className = '' }) {
     <div
       ref={ref}
       style={{ transitionDelay: `${delay}ms` }}
-      className={`transition-all duration-700 ease-out will-change-transform ${inView ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-        } ${className}`}
+      className={`transition-all duration-700 ease-out will-change-transform ${
+        inView ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+      } ${className}`}
     >
       {children}
     </div>
@@ -56,9 +57,6 @@ function getScatterProps(wordIndex, charIndex, char) {
 function ReverseScatterText({ text, progress, wordOffset = 0 }) {
   const words = text.split(' ')
 
-  // Reverse format:
-  // When progress = 0 (entering view): scatterFactor = 1 (fully scattered into space)
-  // When progress = 1 (scrolled into view): scatterFactor = 0 (letters unscramble into clean text!)
   const scatterFactor = Math.max(0, 1 - progress)
 
   return (
@@ -100,20 +98,17 @@ function ReverseScatterText({ text, progress, wordOffset = 0 }) {
 
 const PILLARS = [
   {
-    icon: Award,
-    title: 'Film-Grade Craft',
-    desc: 'Cinematic visuals, sharp production, and obsessive detail behind every frame we ship.',
-    accent: 'group-hover:bg-black',
+    icon: Compass,
+    title: 'Precision Craft',
+    desc: 'Cinema-quality 4K visual direction, commercial lighting, and post-production editing.',
   },
   {
-    icon: Compass,
-    title: 'Strategic Reach',
-    desc: 'Data-led campaigns that put your brand in front of the right people at the right moment.',
-    accent: 'group-hover:bg-[#0066cc]',
+    icon: Award,
+    title: 'Automated Reach',
+    desc: 'Data-driven ad funnels designed for measurable brand growth and high conversion.',
   },
 ]
 
-// 3D Flip Card: Hidden Back side when un-hovered, flips 180° to reveal Front side on Cursor Hover
 function FlipPillarCard({ pillar, index }) {
   const cardRef = useRef(null)
   const [tilt, setTilt] = useState({ rx: 0, ry: 0, glowX: 50, glowY: 50, isHovered: false })
@@ -126,7 +121,6 @@ function FlipPillarCard({ pillar, index }) {
     const centerX = rect.width / 2
     const centerY = rect.height / 2
 
-    // Slight 3D tilt while hovering front face
     const ry = ((x - centerX) / centerX) * 12
     const rx = -((y - centerY) / centerY) * 12
 
@@ -140,8 +134,6 @@ function FlipPillarCard({ pillar, index }) {
     setTilt((prev) => ({ ...prev, rx: 0, ry: 0, isHovered: false }))
   }
 
-  // Unhovered = 180deg (Back face visible, content hidden)
-  // Hovered = 0deg (Front face visible, content revealed!)
   const rotateY = tilt.isHovered ? tilt.ry : 180
   const rotateX = tilt.isHovered ? tilt.rx : 0
 
@@ -171,26 +163,24 @@ function FlipPillarCard({ pillar, index }) {
             WebkitBackfaceVisibility: 'hidden',
             transform: 'rotateY(0deg)',
           }}
-          className="absolute inset-0 flex flex-col justify-between overflow-hidden rounded-3xl border border-[#0066cc]/30 bg-white p-6 shadow-xl sm:p-8"
+          className="absolute inset-0 flex flex-col justify-between overflow-hidden rounded-3xl border border-black/20 bg-white p-6 shadow-xl sm:p-8"
         >
-          {/* Dynamic Cursor Spotlight Overlay */}
           {tilt.isHovered && (
             <div
+              aria-hidden="true"
               className="pointer-events-none absolute inset-0 transition-opacity duration-300"
               style={{
-                background: `radial-gradient(350px circle at ${tilt.glowX}% ${tilt.glowY}%, rgba(0, 102, 204, 0.12), transparent 70%)`,
+                background: `radial-gradient(350px circle at ${tilt.glowX}% ${tilt.glowY}%, rgba(0, 0, 0, 0.06), transparent 70%)`,
               }}
             />
           )}
 
           <div>
             <div className="flex items-center justify-between">
-              <div
-                className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0066cc] text-white shadow-md`}
-              >
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-black text-white shadow-md">
                 <pillar.icon className="h-6 w-6" />
               </div>
-              <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#0066cc]">
+              <span className="font-mono text-xs font-bold uppercase tracking-widest text-black">
                 0{index + 1}
               </span>
             </div>
@@ -202,34 +192,36 @@ function FlipPillarCard({ pillar, index }) {
           </div>
 
           <div className="border-t border-black/5 pt-3">
-            <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#0066cc]">
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-black">
               <Sparkles className="h-3.5 w-3.5" />
               <span>Core Excellence</span>
             </span>
           </div>
         </div>
 
-        {/* BACK FACE (Blank / Minimalist Cover — visible when unhovered) */}
+        {/* BACK FACE (Minimalist Cover — visible when unhovered) */}
         <div
           style={{
             backfaceVisibility: 'hidden',
             WebkitBackfaceVisibility: 'hidden',
             transform: 'rotateY(180deg)',
           }}
-          className="absolute inset-0 flex flex-col items-center justify-center rounded-3xl border border-black/10 bg-gradient-to-br from-[#1d1d1f] via-[#2c2c2e] to-[#1d1d1f] p-8 text-white shadow-lg transition-all duration-300 group-hover:border-[#0066cc]"
+          className="absolute inset-0 flex flex-col items-center justify-center rounded-3xl border border-black/10 bg-[#1d1d1f] p-8 text-white shadow-lg transition-all duration-300 group-hover:border-black"
         >
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(0,102,204,0.18),transparent_65%)]" />
-
-          <div className="relative z-10 flex flex-col items-center text-center px-4">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md">
-              <pillar.icon className="h-7 w-7 text-[#38bdf8]" />
+          <div className="flex flex-col items-center gap-4 text-center">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-inner">
+              <pillar.icon className="h-7 w-7" />
             </div>
-            <span className="mt-4 font-mono text-xs font-bold uppercase tracking-widest text-[#38bdf8]">
-              {/* Pillar 0{index + 1} */}
+            <div>
+              <span className="font-mono text-xs font-bold uppercase tracking-widest text-white/50">
+                Pillar 0{index + 1}
+              </span>
+              <h3 className="mt-1 text-2xl font-bold tracking-tight text-white">{pillar.title}</h3>
+            </div>
+            <span className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-white">
+              <Sparkles className="h-3.5 w-3.5 text-white" />
+              <span>Hover To Reveal</span>
             </span>
-            <h3 className="mt-2 text-xl font-bold tracking-tight text-white sm:text-2xl">
-              {pillar.title}
-            </h3>
           </div>
         </div>
       </div>
@@ -251,7 +243,6 @@ export default function About() {
       const rect = sectionRef.current.getBoundingClientRect()
       const windowHeight = window.innerHeight || 800
 
-      // Calculate scroll progress from bottom of viewport (0) to upper viewport (1)
       const startPoint = windowHeight * 0.95
       const endPoint = windowHeight * 0.35
 
@@ -261,7 +252,6 @@ export default function About() {
       )
     }
 
-    // High-performance requestAnimationFrame lerp loop tuned for fluid smooth scrolling
     const loop = () => {
       const diff = targetProgress - currentProgress
       if (Math.abs(diff) > 0.0001) {
@@ -285,22 +275,22 @@ export default function About() {
     <section
       id="about"
       ref={sectionRef}
-      className="relative overflow-hidden mx-auto max-w-6xl border-t border-black/10 px-6 py-24 sm:px-10 sm:py-32"
+      className="relative overflow-hidden mx-auto max-w-6xl border-t border-black/10 px-6 py-10 sm:px-10 sm:py-16 lg:py-20"
     >
       {/* Layer 1: Badge */}
       <Reveal>
         <span className="inline-flex items-center gap-2.5 rounded-full border border-black/10 bg-white/70 px-4 py-2 text-xs font-semibold uppercase tracking-[0.15em] text-[#86868b] backdrop-blur-sm">
           <span className="relative flex h-2 w-2" aria-hidden="true">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#0066cc] opacity-75" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-[#0066cc]" />
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-black opacity-75" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-black" />
           </span>
           About the Studio
         </span>
       </Reveal>
 
       {/* Layer 2: Reverse Scroll-Unscramble Headline */}
-      <div className="mb-16 mt-8 max-w-4xl">
-        <h2 className="text-3xl font-semibold leading-[1.12] tracking-tight text-[#1d1d1f] sm:text-5xl md:text-6xl">
+      <div className="mb-10 mt-6 max-w-4xl sm:mb-16 sm:mt-8">
+        <h2 className="text-2xl font-semibold leading-[1.15] tracking-tight text-[#1d1d1f] sm:text-5xl md:text-6xl">
           <ReverseScatterText
             text="We bridge high-end visual craft with strategic digital growth. No clutter, no empty noise."
             progress={scrollProgress}
@@ -310,9 +300,9 @@ export default function About() {
       </div>
 
       {/* Layer 3: Primary split grid */}
-      <div className="grid gap-12 md:grid-cols-2 lg:gap-20">
+      <div className="grid gap-10 md:grid-cols-2 lg:gap-20">
         {/* Left: story paragraphs */}
-        <div className="space-y-6 text-lg leading-[1.6] text-[#86868b] sm:text-xl">
+        <div className="space-y-5 text-base leading-[1.6] text-[#86868b] sm:space-y-6 sm:text-xl">
           <Reveal delay={200}>
             <p>
               Founded in 2025, VV Digitals was built on a single premise: brands shouldn&rsquo;t
@@ -328,7 +318,7 @@ export default function About() {
           </Reveal>
         </div>
 
-        {/* Right: 2-card pillar grid with Cursor-Hover 3D Flip Reveal */}
+        {/* Right: 2-card pillar grid */}
         <div className="grid gap-6 sm:grid-cols-2">
           {PILLARS.map((pillar, i) => (
             <FlipPillarCard key={pillar.title} pillar={pillar} index={i} />

@@ -22,7 +22,6 @@ function ScatterText({ text, progress, wordOffset = 0 }) {
       {letters.map((char, idx) => {
         const { dx, dy, rot, scale } = getScatterProps(wordOffset, idx, char)
 
-        // Interpolate transform attributes based on scroll progress (0 at top, 1 at next section)
         const tx = progress * dx
         const ty = progress * dy
         const r = progress * rot
@@ -46,7 +45,7 @@ function ScatterText({ text, progress, wordOffset = 0 }) {
           >
             {char}
           </span>
-        );
+        )
       })}
     </span>
   )
@@ -61,7 +60,6 @@ export default function Hero() {
       if (!heroEl) return
       const rect = heroEl.getBoundingClientRect()
       const heroHeight = heroEl.offsetHeight || window.innerHeight
-      // Progress calculation: 0 when scrolled to top, 1 when approaching next section
       const progress = Math.min(Math.max(-rect.top / (heroHeight * 0.75), 0), 1)
       setScrollProgress(progress)
     }
@@ -74,55 +72,49 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative mx-auto flex min-h-[85vh] max-w-6xl flex-col justify-between overflow-hidden px-5 pb-12 pt-24 sm:px-10 sm:pb-16 sm:pt-36"
+      className="relative mx-auto flex min-h-[85vh] max-w-6xl flex-col justify-between overflow-hidden px-6 pb-12 pt-28 sm:px-10 sm:pb-16 sm:pt-36"
     >
       {/* Top Block */}
       <div>
-        <h1 className="animate-letter-spacing text-[2.25rem] font-black uppercase leading-[0.95] tracking-tighter text-[#1d1d1f] min-[400px]:text-4xl sm:text-7xl md:text-8xl lg:text-9xl select-none">
-          <span className="block whitespace-nowrap">
-            <ScatterText text="Clear Brands." progress={scrollProgress} wordOffset={1} />
+        <h1 className="animate-letter-spacing text-4xl font-black uppercase leading-[1.02] tracking-tight text-[#1d1d1f] select-none min-[400px]:text-5xl sm:text-7xl sm:leading-[0.95] sm:tracking-tighter md:text-8xl lg:text-9xl">
+          <span className="inline sm:block sm:whitespace-nowrap">
+            <ScatterText text="Clear Brands." progress={scrollProgress} wordOffset={1} />{' '}
           </span>
-          <span className="block whitespace-nowrap">
-            <ScatterText text="Automated" progress={scrollProgress} wordOffset={2} />
+          <span className="inline sm:block sm:whitespace-nowrap">
+            <ScatterText text="Automated" progress={scrollProgress} wordOffset={2} />{' '}
           </span>
-          <span className="block whitespace-nowrap">
+          <span className="inline sm:block sm:whitespace-nowrap">
             <ScatterText text="Growth." progress={scrollProgress} wordOffset={3} />
           </span>
         </h1>
-        <p className="mt-5 flex flex-col gap-1.5 text-xs font-medium leading-relaxed text-[#86868b] sm:mt-8 sm:text-base md:text-lg lg:text-xl">
-          <span className="block whitespace-nowrap">Cinema-grade video &amp; photo production.</span>
-          <span className="block whitespace-nowrap">Targeted digital marketing &amp; ad growth.</span>
-          <span className="block whitespace-nowrap">Engineered in Nellore for regional brands.</span>
+        <p className="mt-6 flex flex-col gap-2 text-sm font-medium leading-relaxed text-[#86868b] sm:mt-8 sm:gap-1.5 sm:text-base md:text-lg lg:text-xl">
+          <span className="inline sm:block sm:whitespace-nowrap">Cinema-grade video &amp; photo production.</span>
+          <span className="inline sm:block sm:whitespace-nowrap">Targeted digital marketing &amp; ad growth.</span>
+          <span className="inline sm:block sm:whitespace-nowrap">Engineered in Nellore for regional brands.</span>
         </p>
       </div>
 
       {/* Bottom Block */}
-      <div className="mt-8 flex flex-col gap-6 sm:mt-12 sm:flex-row sm:items-end sm:justify-between">
-        {/* Left: CTA + phone */}
-        <div className="flex flex-col items-start gap-3 sm:gap-4">
+      <div className="mt-8 flex flex-col gap-4 sm:mt-12 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+        {/* Left: CTA */}
+        <div className="flex w-full sm:w-auto">
           <a
             href="#contact"
-            className="inline-flex rounded-full bg-black px-7 py-3.5 text-sm font-medium text-white transition-all duration-300 hover:scale-[1.03] active:scale-95 shadow-md"
+            className="flex w-full items-center justify-center rounded-full bg-black px-8 py-3.5 text-xs font-bold uppercase tracking-wider text-white transition-all duration-300 hover:scale-[1.02] active:scale-95 shadow-md sm:w-auto sm:text-sm"
           >
             Start a Project
-          </a>
-          <a
-            href="tel:+919491002402"
-            className="text-base font-medium text-[#86868b] transition-colors duration-200 hover:text-[#1d1d1f] sm:text-lg"
-          >
-            +91 94910 02402
           </a>
         </div>
 
         {/* Right: showreel preview card */}
         <a
           href="#reel"
-          className="group flex items-center gap-4 self-start rounded-2xl border border-black/10 bg-[#F5F5F7] p-3.5 transition-all duration-300 hover:scale-[1.04] hover:border-black/20 hover:shadow-lg sm:self-auto sm:p-4"
+          className="group flex w-full items-center justify-center gap-4 rounded-2xl border border-black/10 bg-[#F5F5F7] p-3.5 transition-all duration-300 hover:scale-[1.02] hover:border-black/20 hover:shadow-md sm:w-auto sm:justify-start sm:p-4"
         >
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-black text-white transition-transform duration-500 group-hover:rotate-[90deg] sm:h-11 sm:w-11">
             <Play className="h-4 w-4 fill-current" />
           </span>
-          <span className="flex flex-col">
+          <span className="flex flex-col text-left">
             <span className="text-sm font-semibold text-[#1d1d1f]">Watch Reel</span>
             <span className="text-xs text-[#86868b]">(0:45)</span>
           </span>

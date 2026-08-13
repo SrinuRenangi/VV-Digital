@@ -114,7 +114,7 @@ export default function Founder() {
     <section
       id="founder"
       ref={sectionRef}
-      className="relative overflow-hidden border-y border-black/10 bg-[#f5f5f7]/60 py-24 sm:py-32"
+      className="relative overflow-hidden border-t border-black/10 bg-[#f5f5f7]/40 py-10 sm:py-16 lg:py-20"
     >
       {/* Background Layer: top-right radial glow */}
       <div

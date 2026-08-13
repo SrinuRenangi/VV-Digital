@@ -1,8 +1,8 @@
+import { Sparkles, Tag } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
-import { ShieldCheck, Tag } from 'lucide-react'
 
-/* Scroll-reveal hook: fires once when the element enters the viewport. */
-function useInView(threshold = 0.2) {
+/* Scroll-reveal hook: fires once when element enters viewport. */
+function useInView(threshold = 0.15) {
   const ref = useRef(null)
   const [inView, setInView] = useState(false)
 
@@ -32,118 +32,100 @@ function Reveal({ children, delay = 0, className = '' }) {
     <div
       ref={ref}
       style={{ transitionDelay: `${delay}ms` }}
-      className={`transition-all duration-700 ease-out will-change-transform ${inView ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-        } ${className}`}
+      className={`transition-all duration-700 ease-out will-change-transform ${
+        inView ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+      } ${className}`}
     >
       {children}
     </div>
   )
 }
 
-/*
- * Prominent client roster with transparent, enhanced brand logos.
- * Displayed in exact order requested by user:
- * 1. Sri Srinivasa Concept EM High School - Personal Branding
- * 2. SSV Junior College - Personal Branding
- * 3. Srivari Hospital - Personal Branding
- * 4. IRIS Premium Customised Label Water Bottle - Digital Marketing (Collab with GMS)
- * 5. KK Enterprises Authorised Distributor Oceana - Authorized Distributor Oceana
- * 6. QB Quality Beverages - Authorised Distributor Oceana
- * 7. DR Mobiles - Personal Branding
- * 8. Srimannarayana EM High School - Personal Branding
- */
+/* Authentic Regional Client Data provided by user */
 const CLIENTS = [
   {
-    id: 'sri-srinivasa',
-    name: 'Sri Srinivasa Concept EM High School',
-    subtitle: 'Concept EM Education',
+    id: 'ssv-junior-college',
+    name: 'SSV Junior College',
+    subtitle: 'Ashok Kumar Reddy',
+    logo: '/logos/ssv-junior-college.png',
     category: 'Personal Branding',
-    logo: '/logos/sri-srinivasa-school.png',
-    alt: 'Sri Srinivasa Concept EM High School Logo',
   },
   {
-    id: 'ssv-college',
-    name: 'SSV Junior College',
-    subtitle: 'Higher Education & Academy',
+    id: 'sri-srinivasa-school',
+    name: 'Sri Srinivasa Concept EM High School',
+    subtitle: 'Ashok Kumar Reddy',
+    logo: '/logos/sri-srinivasa-school.png',
     category: 'Personal Branding',
-    logo: '/logos/ssv-junior-college.png',
-    alt: 'SSV Junior College Logo',
   },
   {
     id: 'srivari-hospital',
     name: 'Srivari Hospital',
-    subtitle: 'Multispecialty Healthcare',
-    category: 'Personal Branding',
+    subtitle: 'Dr. Krishna Prasad',
     logo: '/logos/srivari-hospital.png',
-    alt: 'Srivari Hospital Logo',
-  },
-  {
-    id: 'iris-premium',
-    name: 'IRIS Premium',
-    subtitle: 'Customised Label Water Bottle',
-    category: 'Digital Marketing (Collab with GMS)',
-    logo: '/logos/iris-premium-water.png',
-    alt: 'IRIS Premium Water Logo',
-  },
-  {
-    id: 'kk-enterprises',
-    name: 'KK Enterprises',
-    subtitle: 'Authorised Distributor Oceana',
-    category: 'Authorized Distributor Oceana',
-    logo: '/logos/kk-enterprises.png',
-    alt: 'KK Enterprises Logo',
-  },
-  {
-    id: 'qb-quality-beverages',
-    name: 'QB Quality Beverages',
-    subtitle: 'Promise of Purity',
-    category: 'Authorized Distributor Oceana',
-    logo: '/logos/qb-quality-beverages.png',
-    alt: 'QB Quality Beverages Logo',
+    category: 'Personal Branding',
   },
   {
     id: 'dr-mobiles',
     name: 'DR Mobiles',
-    subtitle: 'Mobile Sales & Services',
-    category: 'Personal Branding',
+    subtitle: 'Ramesh',
     logo: '/logos/dr-mobiles.png',
-    alt: 'DR Mobiles Logo',
+    category: 'Personal Branding',
+  },
+  {
+    id: 'iris-premium-water',
+    name: 'IRIS Premium Water',
+    subtitle: 'Customised Label Water Bottle',
+    logo: '/logos/iris-premium-water.png',
+    category: 'Digital Marketing',
+  },
+  {
+    id: 'kk-enterprises',
+    name: 'KK Enterprises',
+    subtitle: 'Oceana Authorized Distributor',
+    logo: '/logos/kk-enterprises.png',
+    category: 'Distribution Partner',
+  },
+  {
+    id: 'qb-quality-beverages',
+    name: 'QB Quality Beverages',
+    subtitle: 'Authorized Regional Distributor',
+    logo: '/logos/qb-quality-beverages.png',
+    category: 'Authorized Distributor',
   },
   {
     id: 'srimannarayana-school',
     name: 'Srimannarayana EM High School',
-    subtitle: 'Atmakur - SPSR Nellore Dist',
-    category: 'Personal Branding',
+    subtitle: 'Institutional Brand Partner',
     logo: '/logos/srimannarayana-school.png',
-    alt: 'Srimannarayana EM High School Logo',
+    category: 'Personal Branding',
   },
 ]
 
 function ClientCard({ client }) {
   return (
-    <div className="group relative flex min-w-[300px] cursor-pointer items-center gap-5 rounded-3xl border border-black/10 bg-white/90 p-5 shadow-sm backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-[#0066cc]/30 hover:bg-white hover:shadow-xl sm:min-w-[350px] sm:p-6">
-      {/* Enhanced Logo Container with Transparent Background */}
-      <div className="relative flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl border border-black/5 bg-[#f8f9fa] p-2 transition-all duration-300 group-hover:border-[#0066cc]/20 group-hover:bg-white group-hover:shadow-md sm:h-22 sm:w-22">
+    <div className="group relative flex h-full min-w-[280px] max-w-[340px] flex-col items-start gap-4 rounded-3xl border border-black/10 bg-white p-6 shadow-xs backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-black/30 hover:shadow-xl sm:min-w-[320px] sm:p-7">
+      {/* Brand Logo Container */}
+      <div className="flex h-16 w-full items-center justify-center rounded-2xl border border-black/5 bg-[#f8f9fa] p-3 transition-colors duration-200 group-hover:border-black/20 group-hover:bg-white">
         <img
           src={client.logo}
-          alt={client.alt}
-          className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-108"
+          alt={`${client.name} Logo`}
+          className="max-h-full max-w-full object-contain filter transition-all duration-300 group-hover:scale-105"
           loading="lazy"
         />
       </div>
 
-      {/* Client Information */}
-      <div className="flex min-w-0 flex-1 flex-col justify-center">
-        <span className="truncate text-base font-bold text-[#1d1d1f] transition-colors duration-200 group-hover:text-[#0066cc] sm:text-lg">
+      {/* Brand Info & Metadata */}
+      <div className="flex w-full flex-col gap-1">
+        <h3 className="line-clamp-1 text-base font-bold text-[#1d1d1f] group-hover:text-black transition-colors duration-200 sm:text-lg">
           {client.name}
-        </span>
+        </h3>
         {client.subtitle && (
           <span className="truncate text-xs font-medium text-[#86868b] sm:text-sm">
             {client.subtitle}
           </span>
         )}
-        <div className="mt-2 inline-flex items-center gap-1.5 self-start rounded-full border border-[#0066cc]/20 bg-[#0066cc]/10 px-2.5 py-0.5 text-[11px] font-semibold text-[#0066cc]">
-          <Tag className="h-3 w-3 shrink-0" />
+        <div className="mt-2 inline-flex items-center gap-1.5 self-start rounded-full border border-black/10 bg-[#f5f5f7] px-2.5 py-0.5 text-[11px] font-semibold text-[#1d1d1f]">
+          <Tag className="h-3 w-3 shrink-0 text-black" />
           <span className="truncate">{client.category}</span>
         </div>
       </div>
@@ -155,35 +137,33 @@ export default function Clients() {
   return (
     <section
       id="clients"
-      className="relative overflow-hidden border-y border-black/10 bg-gradient-to-b from-[#f5f5f7]/80 via-white to-[#f5f5f7]/60 py-24"
+      className="relative overflow-hidden border-y border-black/10 bg-white py-10 sm:py-16 lg:py-20"
     >
-      {/* Background Accent Blur */}
-      <div className="pointer-events-none absolute -top-40 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-[#0066cc]/5 blur-3xl" />
-
       {/* Section Header */}
-      <div className="mx-auto mb-16 flex max-w-6xl flex-col items-center justify-between gap-6 px-6 sm:px-10 md:flex-row">
+      <div className="mx-auto mb-10 flex max-w-6xl flex-col items-center justify-between gap-6 px-6 sm:mb-16 sm:px-10 md:flex-row">
         <Reveal className="flex flex-col items-center gap-4 md:items-start">
-          <span className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-[#86868b] shadow-xs">
+          <span className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-[#f5f5f7] px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-[#1d1d1f] shadow-xs">
             <span className="relative flex h-2 w-2" aria-hidden="true">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#0066cc] opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#0066cc]" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-black opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-black" />
             </span>
-            Client Roster
+            Proven Client Roster
           </span>
-          <h2 className="text-center text-3xl font-bold tracking-tight text-[#1d1d1f] sm:text-4xl md:text-left">
-            Trusted by growing regional brands.
+          <h2 className="text-center text-4xl font-extrabold tracking-tight text-[#1d1d1f] sm:text-left sm:text-6xl">
+            Trusted by leaders.
           </h2>
         </Reveal>
-        <Reveal delay={120}>
-          <p className="flex flex-col text-center text-xs leading-relaxed text-[#86868b] sm:text-sm md:text-base md:text-right">
-            <span className="block whitespace-nowrap">Every client receives our team&rsquo;s direct focus,</span>
+
+        <Reveal delay={100} className="max-w-md text-center md:text-left">
+          <p className="flex flex-col gap-1 text-sm font-medium leading-relaxed text-[#86868b] sm:text-base md:text-lg">
+            <span className="block whitespace-nowrap">High-impact video production,</span>
             <span className="block whitespace-nowrap">custom content strategy, and</span>
             <span className="block whitespace-nowrap">personal brand development.</span>
           </p>
         </Reveal>
       </div>
 
-      {/* Interactive Marquee Track (Right-Side Scrolling) */}
+      {/* Interactive Marquee Track */}
       <div className="marquee-mask w-full overflow-hidden py-2">
         <div className="flex w-max animate-marquee-reverse gap-6 pr-6 pause-on-hover">
           {[0, 1].map((half) => (
@@ -195,38 +175,6 @@ export default function Clients() {
           ))}
         </div>
       </div>
-
-      {/* Grid Showcase Below Marquee for Full Visibility of All 8 Brands */}
-      {/* <div className="mx-auto mt-16 max-w-6xl px-6 sm:px-10">
-        <Reveal delay={200}>
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4">
-            {CLIENTS.map((client) => (
-              <div
-                key={`grid-${client.id}`}
-                className="group flex flex-col items-center justify-between rounded-2xl border border-black/10 bg-white p-5 text-center shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-[#0066cc]/30 hover:shadow-lg"
-              >
-                <div className="flex h-24 w-full items-center justify-center p-2">
-                  <img
-                    src={client.logo}
-                    alt={client.alt}
-                    className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-110"
-                    loading="lazy"
-                  />
-                </div>
-                <div className="mt-4 flex flex-col items-center">
-                  <h3 className="line-clamp-2 text-sm font-bold text-[#1d1d1f] transition-colors duration-200 group-hover:text-[#0066cc]">
-                    {client.name}
-                  </h3>
-                  <span className="mt-2.5 inline-flex items-center gap-1 rounded-full bg-[#0066cc]/10 px-2.5 py-0.5 text-[10px] font-semibold text-[#0066cc]">
-                    <ShieldCheck className="h-3 w-3" />
-                    {client.category}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </Reveal>
-      </div> */}
     </section>
   )
 }

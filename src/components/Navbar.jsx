@@ -15,9 +15,9 @@ export default function Navbar() {
   const closeMenu = () => setMenuOpen(false)
 
   return (
-    <header className="fixed left-1/2 top-4 z-50 w-[92%] max-w-5xl -translate-x-1/2">
+    <header className="fixed left-1/2 top-4 z-50 w-[92%] max-w-5xl xl:max-w-6xl 2xl:max-w-7xl -translate-x-1/2 transition-all duration-300">
       {/* Floating pill container */}
-      <div className="flex items-center justify-between rounded-full border border-black/10 bg-white/80 px-6 py-3 shadow-md backdrop-blur-xl">
+      <div className="flex items-center justify-between rounded-full border border-black/10 bg-white/80 px-6 py-3 shadow-md backdrop-blur-xl xl:px-8 xl:py-4">
         {/* Left: actual logo + badge */}
         <a
           href="#"
@@ -31,19 +31,19 @@ export default function Navbar() {
           <img
             src="/vv-digitals-logo-stacked-black.svg"
             alt="VV Digitals"
-            className="h-10 w-auto shrink-0"
+            className="h-10 w-auto shrink-0 xl:h-12"
             loading="eager"
           />
 
         </a>
 
         {/* Center: links */}
-        <nav aria-label="Primary" className="hidden items-center gap-1 md:flex">
+        <nav aria-label="Primary" className="hidden items-center gap-1 md:flex xl:gap-2">
           {NAV_LINKS.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="rounded-full px-3 py-1 text-sm font-medium text-[#1d1d1f]/80 transition-colors duration-200 hover:bg-black/5 hover:text-[#1d1d1f]"
+              className="rounded-full px-3 py-1 text-sm font-medium text-[#1d1d1f]/80 transition-colors duration-200 hover:bg-black/5 hover:text-[#1d1d1f] xl:px-4 xl:py-1.5 xl:text-base"
             >
               {link.label}
             </a>
@@ -54,7 +54,7 @@ export default function Navbar() {
         <div className="flex items-center gap-2">
           <a
             href="#contact"
-            className="hidden rounded-full bg-[#0066CC] px-5 py-2 text-sm font-medium text-white transition-all duration-300 hover:bg-[#0066cc]/90 hover:shadow-lg hover:shadow-[#0066cc]/20 active:scale-95 sm:inline-flex"
+            className="hidden rounded-full bg-black px-5 py-2 text-sm font-medium text-white transition-all duration-300 hover:bg-[#1d1d1f] hover:shadow-md active:scale-95 sm:inline-flex xl:px-7 xl:py-2.5 xl:text-base"
           >
             Get in Touch
           </a>
@@ -93,7 +93,7 @@ export default function Navbar() {
             <a
               href="#contact"
               onClick={closeMenu}
-              className="mt-2 flex w-full items-center justify-center rounded-full bg-[#0066CC] px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:bg-[#0066cc]/90 hover:shadow-lg hover:shadow-[#0066cc]/20 active:scale-95"
+              className="mt-2 flex w-full items-center justify-center rounded-full bg-black px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:bg-[#1d1d1f] hover:shadow-md active:scale-95"
             >
               Get in Touch
             </a>

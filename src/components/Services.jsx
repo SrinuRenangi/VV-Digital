@@ -187,7 +187,7 @@ export default function Services() {
     <section
       id="services"
       ref={sectionRef}
-      className="relative border-t border-black/10 bg-white py-24 sm:py-32"
+      className="relative border-t border-black/10 bg-white py-10 sm:py-16 lg:py-20"
     >
       <div className="mx-auto max-w-7xl px-6 sm:px-10">
         {/* 50/50 Split Grid Container */}

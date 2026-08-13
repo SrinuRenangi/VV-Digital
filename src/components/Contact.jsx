@@ -76,7 +76,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden border-t border-black/10 bg-[#f5f5f7]/60 py-24 sm:py-32"
+      className="relative overflow-hidden border-t border-black/10 bg-[#f5f5f7]/60 py-10 sm:py-16 lg:py-20"
     >
       <div className="mx-auto grid max-w-6xl grid-cols-1 items-stretch gap-12 px-6 sm:px-10 lg:grid-cols-12 lg:gap-16">
         {/* Left Column (Equal Height Match) */}

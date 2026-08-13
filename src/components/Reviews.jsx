@@ -135,24 +135,24 @@ const REVIEWS = [
 
 function ReviewCard({ review }) {
   return (
-    <div className="group relative flex h-full min-w-[340px] max-w-[420px] flex-col justify-between rounded-3xl border border-black/10 bg-white p-7 shadow-xs backdrop-blur-md transition-all duration-300 hover:-translate-y-1.5 hover:border-[#0066cc]/30 hover:shadow-xl sm:min-w-[380px] sm:p-8">
+    <div className="group relative flex h-full min-w-[340px] max-w-[420px] flex-col justify-between rounded-3xl border border-black/10 bg-white p-7 shadow-xs backdrop-blur-md transition-all duration-300 hover:-translate-y-1.5 hover:border-black/30 hover:shadow-xl sm:min-w-[380px] sm:p-8">
       {/* Top Header: Rating Stars & Category Pill */}
       <div>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1">
             {Array.from({ length: review.rating }).map((_, i) => (
-              <Star key={i} className="h-4 w-4 fill-[#0066cc] text-[#0066cc]" />
+              <Star key={i} className="h-4 w-4 fill-black text-black" />
             ))}
           </div>
-          <span className="inline-flex items-center gap-1 rounded-full border border-[#0066cc]/20 bg-[#0066cc]/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#0066cc]">
-            <Tag className="h-3 w-3" />
+          <span className="inline-flex items-center gap-1 rounded-full border border-black/10 bg-[#f5f5f7] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#1d1d1f]">
+            <Tag className="h-3 w-3 text-black" />
             {review.category}
           </span>
         </div>
 
         {/* Quote */}
         <div className="relative mt-6">
-          <Quote className="absolute -left-2 -top-3 h-8 w-8 text-[#0066cc]/10" />
+          <Quote className="absolute -left-2 -top-3 h-8 w-8 text-black/10" />
           <p className="relative z-10 text-sm leading-relaxed text-[#1d1d1f]/85 sm:text-base">
             &ldquo;{review.quote}&rdquo;
           </p>
@@ -162,7 +162,7 @@ function ReviewCard({ review }) {
       {/* Author & Client Metadata Footer */}
       <div className="mt-8 flex items-center gap-4 border-t border-black/10 pt-5">
         {/* Client Logo Avatar */}
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-black/5 bg-[#f8f9fa] p-1.5 transition-colors duration-200 group-hover:border-[#0066cc]/20 group-hover:bg-white">
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-black/5 bg-[#f8f9fa] p-1.5 transition-colors duration-200 group-hover:border-black/20 group-hover:bg-white">
           <img
             src={review.logo}
             alt={review.clientName}
@@ -172,7 +172,7 @@ function ReviewCard({ review }) {
         </div>
 
         <div className="flex min-w-0 flex-1 flex-col">
-          <p className="truncate text-base font-bold text-[#1d1d1f] group-hover:text-[#0066cc] transition-colors duration-200">
+          <p className="truncate text-base font-bold text-[#1d1d1f] group-hover:text-black transition-colors duration-200">
             {review.name}
           </p>
           <p className="truncate text-xs font-semibold text-[#1d1d1f]/75">
@@ -191,17 +191,14 @@ export default function Reviews() {
   return (
     <section
       id="reviews"
-      className="relative overflow-hidden border-t border-black/10 bg-gradient-to-b from-white via-[#f5f5f7]/60 to-white py-24 sm:py-32"
+      className="relative overflow-hidden border-t border-black/10 bg-white py-10 sm:py-16 lg:py-20"
     >
-      {/* Ambient Radial Background Blur */}
-      <div className="pointer-events-none absolute right-0 top-1/3 h-96 w-96 rounded-full bg-[#0066cc]/5 blur-3xl" />
-
       {/* Section Header */}
       <div className="mx-auto max-w-6xl px-6 sm:px-10">
         <Reveal>
-          <span className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-[#86868b] shadow-xs">
-            <Sparkles className="h-3.5 w-3.5 text-[#0066cc]" />
-            Client Feedback & Testimonials
+          <span className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-[#f5f5f7] px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-[#1d1d1f] shadow-xs">
+            <Sparkles className="h-3.5 w-3.5 text-black" />
+            Client Feedback &amp; Testimonials
           </span>
         </Reveal>
 
