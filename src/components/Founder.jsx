@@ -119,7 +119,7 @@ export default function Founder() {
       {/* Background Layer: top-right radial glow */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-24 -right-40 h-[30rem] w-[30rem] rounded-full bg-gradient-to-br from-[#0066cc]/8 to-transparent blur-[100px]"
+        className="pointer-events-none absolute -top-24 -right-40 h-[30rem] w-[30rem] rounded-full bg-gradient-to-br from-black/5 to-transparent blur-[100px]"
       />
 
       {/* Inner Wrapper */}
@@ -127,7 +127,7 @@ export default function Founder() {
         {/* Eyebrow Badge */}
         <Reveal>
           <span className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.15em] text-[#86868b] shadow-sm">
-            <Sparkles className="h-4 w-4 text-[#0066cc]" />
+            <Sparkles className="h-4 w-4 text-black" />
             Leadership
           </span>
         </Reveal>
@@ -151,7 +151,7 @@ export default function Founder() {
                   </div>
 
                   {/* Floating FOUNDER badge */}
-                  <span className="absolute -bottom-3 left-4 rounded-full bg-[#0066cc] px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-white shadow-lg">
+                  <span className="absolute -bottom-3 left-4 rounded-full bg-black px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-white shadow-lg">
                     Founder &amp; Director
                   </span>
                 </div>
@@ -165,18 +165,18 @@ export default function Founder() {
                 {/* Meta Tags */}
                 <div className="flex flex-wrap gap-2">
                   <span className="inline-flex items-center gap-1.5 rounded-full border border-black/10 bg-white px-3 py-1.5 text-xs font-medium text-[#1d1d1f]">
-                    <MapPin className="h-3.5 w-3.5 text-[#0066cc]" />
+                    <MapPin className="h-3.5 w-3.5 text-black" />
                     Nellore, Andhra Pradesh
                   </span>
                   <span className="inline-flex items-center gap-1.5 rounded-full border border-black/10 bg-white px-3 py-1.5 text-xs font-medium text-[#1d1d1f]">
-                    <Calendar className="h-3.5 w-3.5 text-[#0066cc]" />
+                    <Calendar className="h-3.5 w-3.5 text-black" />
                     Est. 2025
                   </span>
                 </div>
               </div>
               {/* Right Column */}
               <div className="lg:col-span-7">
-                <blockquote className="border-l-2 border-[#0066cc] pl-5 text-xl font-normal leading-relaxed text-[#1d1d1f] sm:pl-6 sm:text-2xl">
+                <blockquote className="border-l-2 border-black pl-5 text-xl font-normal leading-relaxed text-[#1d1d1f] sm:pl-6 sm:text-2xl">
                   <VaporText
                     text="Every business has a story worth telling. My goal with VV Digitals is to give brands the visual polish and marketing horsepower they need to stand alongside industry leaders."
                     progress={scrollProgress}
@@ -195,7 +195,7 @@ export default function Founder() {
                     href="tel:+919491002402"
                     className="group inline-flex items-center gap-2 rounded-full bg-black px-6 py-3.5 text-sm font-medium text-white transition-all duration-300 hover:scale-[1.03] active:scale-95"
                   >
-                    <Phone className="h-4 w-4 text-[#0066cc]" />
+                    <Phone className="h-4 w-4 text-white" />
                     Call +91 94910 02402
                     <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                   </a>

@@ -72,7 +72,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative mx-auto flex min-h-[85vh] max-w-6xl flex-col justify-between overflow-hidden px-6 pb-12 pt-28 sm:px-10 sm:pb-16 sm:pt-36"
+      className="relative mx-auto flex min-h-[85vh] max-w-6xl flex-col justify-between overflow-hidden px-6 pb-12 pt-36 sm:px-10 sm:pb-16 sm:pt-48"
     >
       {/* Top Block */}
       <div>

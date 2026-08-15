@@ -139,7 +139,7 @@ export default function Contact() {
           {submitted ? (
             <div className="flex flex-col justify-center h-full rounded-3xl border border-black/10 bg-white p-6 shadow-sm sm:p-8 md:p-10">
               <div className="flex flex-col items-center text-center">
-                <CheckCircle2 className="h-14 w-14 text-[#25D366]" />
+                <CheckCircle2 className="h-14 w-14 text-green-500" />
                 <h3 className="mt-5 text-2xl font-semibold text-[#1d1d1f]">Inquiry Sent via WhatsApp</h3>
                 <p className="mt-2 leading-relaxed text-[#86868b]">
                   Thank you for reaching out! Your project details have been sent directly to WhatsApp (<b>+91 94910 02402</b>). Renangi Vishnu Vardhan and the VV Digitals team will reply shortly.
@@ -219,7 +219,7 @@ export default function Contact() {
                 type="submit"
                 className="mt-6 flex w-full items-center justify-center gap-2.5 rounded-full bg-black px-6 py-4 text-xs font-bold uppercase tracking-wider text-white transition-all duration-300 hover:scale-[1.01] hover:bg-[#1d1d1f] active:scale-95 shadow-md sm:mt-8"
               >
-                <MessageSquare className="h-4 w-4 text-[#25D366]" />
+                <MessageSquare className="h-4 w-4 text-white" />
                 <span>Let&rsquo;s Connect</span>
               </button>
             </form>
