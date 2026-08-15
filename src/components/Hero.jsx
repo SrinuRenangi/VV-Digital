@@ -76,16 +76,8 @@ export default function Hero() {
     >
       {/* Top Block */}
       <div>
-        <h1 className="animate-letter-spacing text-4xl font-black uppercase leading-[1.02] tracking-tight text-[#1d1d1f] select-none min-[400px]:text-5xl sm:text-7xl sm:leading-[0.95] sm:tracking-tighter md:text-8xl lg:text-9xl">
-          <span className="inline sm:block sm:whitespace-nowrap">
-            <ScatterText text="Clear Brands." progress={scrollProgress} wordOffset={1} />{' '}
-          </span>
-          <span className="inline sm:block sm:whitespace-nowrap">
-            <ScatterText text="Automated" progress={scrollProgress} wordOffset={2} />{' '}
-          </span>
-          <span className="inline sm:block sm:whitespace-nowrap">
-            <ScatterText text="Growth." progress={scrollProgress} wordOffset={3} />
-          </span>
+        <h1 className="text-4xl font-black leading-[1.02] tracking-tight text-[#1d1d1f] select-none min-[400px]:text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
+          Where creativity meets digital growth.
         </h1>
         <p className="mt-6 flex flex-col gap-2 text-sm font-medium leading-relaxed text-[#86868b] sm:mt-8 sm:gap-1.5 sm:text-base md:text-lg lg:text-xl">
           <span className="inline sm:block sm:whitespace-nowrap">Where creativity meets digital growth.</span>
