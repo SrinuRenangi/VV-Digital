@@ -145,7 +145,7 @@ export default function Founder() {
                     <img
                       src="/Vishnu pic.svg"
                       alt="Renangi Vishnu Vardhan — Founder & Creative Director"
-                      className="h-full w-full rounded-3xl object-cover object-top p-0 m-0 border-none scale-[1.18] transition-transform duration-500 group-hover:scale-[1.24]"
+                      className="absolute inset-0 block h-full w-full object-cover object-top p-0 m-0 border-none scale-[1.18] transition-transform duration-500 group-hover:scale-[1.24]"
                       loading="eager"
                     />
                   </div>

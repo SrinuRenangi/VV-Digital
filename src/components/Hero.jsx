@@ -88,9 +88,8 @@ export default function Hero() {
           </span>
         </h1>
         <p className="mt-6 flex flex-col gap-2 text-sm font-medium leading-relaxed text-[#86868b] sm:mt-8 sm:gap-1.5 sm:text-base md:text-lg lg:text-xl">
-          <span className="inline sm:block sm:whitespace-nowrap">Cinema-grade video &amp; photo production.</span>
-          <span className="inline sm:block sm:whitespace-nowrap">Targeted digital marketing &amp; ad growth.</span>
-          <span className="inline sm:block sm:whitespace-nowrap">Engineered in Nellore for regional brands.</span>
+          <span className="inline sm:block sm:whitespace-nowrap">Where creativity meets digital growth.</span>
+          <span className="inline sm:block sm:whitespace-nowrap">VV Digitals helps businesses build memorable brands, connect with the right audience, and achieve measurable results</span>
         </p>
       </div>
 

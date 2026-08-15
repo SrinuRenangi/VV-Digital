@@ -53,76 +53,88 @@ function Reveal({ children, delay = 0, className = '' }) {
 
 const SERVICES_DATA = [
   {
-    id: 'production',
+    id: 'branding-design',
     num: '01',
-    category: 'Production',
-    title: 'Photo & Video Production',
-    tagline: 'Cinematic 4K media production tailored for regional impact.',
-    description:
-      'We handle complete on-field commercial shoots, high-end product photography, and brand documentaries using cinema-grade equipment.',
-    icon: Camera,
-    stat: '150+ Shoots Executed',
-    highlights: [
-      '4K & 60FPS Cinema Filming',
-      'Commercial Concept & Direction',
-      'Studio & Product Photography',
-      'Aerial Drone & Event Coverage',
-    ],
-    deliverables: ['TV & Social Ad Master', 'Raw & Graded Stills', 'Short-form Reel Cuts'],
-  },
-  {
-    id: 'marketing',
-    num: '02',
-    category: 'Marketing',
-    title: 'Digital Marketing & Performance',
-    tagline: 'Data-driven ad campaigns built to turn views into high-intent leads.',
-    description:
-      'From Meta ad funnels to hyper-targeted Google search ads, we optimize every rupee of ad spend to maximize customer acquisition.',
-    icon: TrendingUp,
-    stat: '4.2x Average Campaign ROI',
-    highlights: [
-      'Meta & Instagram Ad Funnels',
-      'Google Ads & Local Search SEO',
-      'Hyper-Local Audience Targeting',
-      'Real-time Performance Analytics',
-    ],
-    deliverables: ['Custom Ad Creative Set', 'Weekly Lead Reports', 'Funnel Optimization'],
-  },
-  {
-    id: 'promotion',
-    num: '03',
     category: 'Branding',
-    title: 'Brand Promotion & Identity',
-    tagline: 'Transforming regional businesses into trusted household brands.',
-    description:
-      'Complete end-to-end personal branding, commercial launch campaigns, visual identity assets, and influencer collaboration management.',
-    icon: Megaphone,
-    stat: '35+ Regional Brands Built',
-    highlights: [
-      'Commercial Launch Strategy',
-      'Visual Identity & Logo Assets',
-      'Personal Branding Programs',
-      'PR & Influencer Partnerships',
-    ],
-    deliverables: ['Brand Guidelines Deck', 'Launch Campaign Plan', 'Social Media Kit'],
+    title: 'Branding & Design',
+    tagline: 'Create memorable visual identities and brand systems.',
+    description: 'Logo design, visual identity, brand guidelines and packaging that resonate.',
+    icon: Sparkles,
+    stat: 'Identity-first Approach',
+    highlights: ['Logo & Visual Identity', 'Brand Guidelines', 'Packaging & Collateral', 'Naming & Tone'],
+    deliverables: ['Brand Guidelines', 'Logo Assets', 'Visual System'],
   },
   {
-    id: 'post-production',
+    id: 'websites-ecom',
+    num: '02',
+    category: 'Web',
+    title: 'Websites & E-commerce',
+    tagline: 'Fast, conversion-focused websites and online stores.',
+    description: 'Responsive sites, headless or Shopify stores, and UX tuned for sales.',
+    icon: Zap,
+    stat: 'Conversion-First Builds',
+    highlights: ['Responsive Design', 'E-commerce Setup', 'Performance Optimization', 'CMS Integration'],
+    deliverables: ['Website Launch', 'Ecom Setup', 'Checkout Optimizations'],
+  },
+  {
+    id: 'online-marketing',
+    num: '03',
+    category: 'Marketing',
+    title: 'Online Marketing',
+    tagline: 'End-to-end paid & organic acquisition strategies.',
+    description: 'Ad funnels, audience growth, and performance media across channels.',
+    icon: Megaphone,
+    stat: 'Performance Driven',
+    highlights: ['Paid Social', 'Search Ads', 'Funnel Strategy', 'Creative Testing'],
+    deliverables: ['Campaign Setup', 'Creative Sets', 'Weekly Reports'],
+  },
+  {
+    id: 'content-storytelling',
     num: '04',
-    category: 'Post-Production',
-    title: 'Video Editing & Post-Production',
-    tagline: 'Precision pacing, Hollywood color grading, and dynamic motion graphics.',
-    description:
-      'Our post-production suite transforms raw video footage into polished, high-engagement content engineered for modern social algorithms.',
-    icon: Scissors,
-    stat: '100% 4K Mastered Outputs',
-    highlights: [
-      'DaVinci Resolve Color Grading',
-      '2D & 3D Motion Graphics',
-      'Sound Design & Audio Mix',
-      'High-Pacing Short Reel Edits',
-    ],
-    deliverables: ['4K ProRes Export', 'Vertical Reel Variants', 'Subtitled Cutdowns'],
+    category: 'Content',
+    title: 'Content & Storytelling',
+    tagline: 'Compelling narratives and content that convert.',
+    description: 'Scripts, long-form stories, micro-content, and editorial calendars.',
+    icon: Camera,
+    stat: 'Story-Led Content',
+    highlights: ['Scriptwriting', 'Long-form & Short-form', 'Editorial Calendars', 'Repurposing'],
+    deliverables: ['Content Calendar', 'Shotlists', 'Script Decks'],
+  },
+  {
+    id: 'social-management',
+    num: '05',
+    category: 'Social',
+    title: 'Social Media Management',
+    tagline: 'Strategy, posting cadence, and community management.',
+    description: 'Daily content operations, community engagement and growth hacking.',
+    icon: Megaphone,
+    stat: 'Audience Growth',
+    highlights: ['Content Scheduling', 'Community Management', 'Influencer Collabs', 'Platform Strategy'],
+    deliverables: ['Monthly Content Pack', 'Community Playbook'],
+  },
+  {
+    id: 'seo-analytics',
+    num: '06',
+    category: 'SEO',
+    title: 'SEO & Analytics',
+    tagline: 'Data-led SEO and analytics for sustainable traffic.',
+    description: 'On-page SEO, technical audits and measurement frameworks for growth.',
+    icon: BarChart3,
+    stat: 'Insight-Backed Growth',
+    highlights: ['Technical SEO', 'Content SEO', 'Analytics Setup', 'Dashboards & Reporting'],
+    deliverables: ['SEO Audit', 'Tracking Setup', 'Monthly Insights'],
+  },
+  {
+    id: 'video-production',
+    num: '07',
+    category: 'Production',
+    title: 'Video Production',
+    tagline: 'Cinema-grade video for ads, launches and brand stories.',
+    description: 'Commercial shoots, product films and social-first video packages.',
+    icon: Camera,
+    stat: '4K Production',
+    highlights: ['Commercial Shoots', 'Short-form Reels', 'Color Grading', 'Motion Graphics'],
+    deliverables: ['Ad Masters', 'Reels & Cutdowns'],
   },
 ]
 
@@ -204,13 +216,13 @@ export default function Services() {
 
             <Reveal delay={100}>
               <h2 className="mt-6 text-4xl font-extrabold tracking-tight text-[#1d1d1f] sm:text-5xl lg:text-6xl leading-[1.1]">
-                End-to-End Brand Building.
+                Where creativity meets digital growth.
               </h2>
             </Reveal>
 
             <Reveal delay={180}>
               <p className="mt-6 text-base leading-relaxed text-[#86868b] sm:text-lg">
-                We combine cinema-grade video production with performance digital marketing to build market-leading regional brands.
+                VV Digitals helps businesses build memorable brands, connect with the right audience, and achieve measurable results
               </p>
             </Reveal>
 
