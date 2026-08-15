@@ -76,12 +76,13 @@ export default function Hero() {
     >
       {/* Top Block */}
       <div>
-        <h1 className="text-4xl font-black leading-[1.02] tracking-tight text-[#1d1d1f] select-none min-[400px]:text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
-          Where creativity meets digital growth.
-        </h1>
-        <p className="mt-6 text-sm font-medium leading-relaxed text-[#86868b] sm:mt-8 sm:text-base md:text-lg lg:text-xl">
-          VV Digitals helps businesses build memorable brands, connect with the right audience, and achieve measurable results
-        </p>
+          <h1 className="text-4xl font-black leading-[1.02] tracking-tight text-[#1d1d1f] select-none min-[400px]:text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-center">
+            <ScatterText text="Where creativity meets digital growth." progress={scrollProgress} wordOffset={1} />
+          </h1>
+
+          <p className="mt-6 mx-auto max-w-3xl text-center text-sm font-medium leading-relaxed text-[#86868b] sm:mt-8 sm:text-base md:text-lg lg:text-xl">
+            VV Digitals helps businesses build memorable brands, connect with the right audience, and achieve measurable results
+          </p>
       </div>
 
       {/* Bottom Block */}
